@@ -1,0 +1,1 @@
+nginx is configured through nginx.conf and placed in the directory /usr/local/nginx/conf, /etc/nginx, or /usr/local/etc/nginx
