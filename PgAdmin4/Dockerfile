@@ -1,0 +1,3 @@
+FROM dpage/pgadmin4
+ENV PGADMIN_DEFAULT_EMAIL=admin@5thcoalition.com
+ENV PGADMIN_DEFAULT_PASSWORD=1KSA@fnc
