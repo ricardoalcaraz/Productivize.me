@@ -8,4 +8,4 @@ ENV PG_USER=admin
 ENV PG_PASSWORD=1KSA@fnc
 ENV PG_ROOT_PASSWORD=1KSA@fnc
 
-VOLUME /var/lib/postgresql/data
+COPY init.* /docker-entrypoint-initdb.d/
