@@ -1,4 +1,4 @@
-FROM postgres
+FROM postgres:11-alpine
 
 ENV PG_MODE=primary
 ENV PG_PRIMARY_USER=postgres
@@ -7,6 +7,5 @@ ENV PG_DATABASE=testdb
 ENV PG_USER=admin
 ENV PG_PASSWORD=1KSA@fnc
 ENV PG_ROOT_PASSWORD=1KSA@fnc
-ENV PG_PRIMARY_PORT=5432
 
 VOLUME /var/lib/postgresql/data
