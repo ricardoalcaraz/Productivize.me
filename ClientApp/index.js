@@ -5,7 +5,7 @@ $( document ).ready(function() {
     jQuery.support.cors = true;
 });
 
-function submitClick(){ 
+function submitClick(){
     console.log("Button clicked");
     $("#nice").text("Nice");
 }
