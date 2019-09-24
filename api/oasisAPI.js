@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //TODO: Figure out how to run up with all its needed dependencies
-//TODO: Figure how to get rid of cors <= just delete it bro.
+//TODO: Figure how to get rid of cors
 //TODO: Create an endpoint that will query the database <= server.js has it
 /* API */
 app.get('/habits', (req, res) => {
