@@ -14,7 +14,7 @@ function hitTestEndpoint(){
     console.log('Hit test endpoint button');
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8081/test',
+        url: 'http://localhost:8092/test',
         beforeSend: function(request) {
             request.setRequestHeader("Access-Control-Allow-Origin", "*");
         },
