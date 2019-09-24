@@ -1,1 +1,12 @@
 nginx is configured through nginx.conf and placed in the directory /usr/local/nginx/conf, /etc/nginx, or /usr/local/etc/nginx
+
+
+//--------miguels garbage--------/
+COPY test relativeDir/   # adds "test" to `WORKDIR`/relativeDir/
+COPY test /absoluteDir/  # adds "test" to /absoluteDir/
+
+To remove all unused volumes and free up space:
+
+$ docker volume prune
+
+docker exec -it <postgres> bash
