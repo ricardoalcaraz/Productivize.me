@@ -3,16 +3,12 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const port = process.argv.slice(2)[0]; //use docker args.
 const app = express();
+const port = process.env.PORT;
+const databaseURL = process.env.DATABASE_URL;
 
-// TODO: Add repository.
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'postgres',
-  password: '1KSA@fnc',
-  port: 5432,
+  connectionString: databaseURL,
 })
 
 /* MIDDLEWARE */
@@ -32,7 +28,8 @@ app.get('/test', (req, res) => {
 
 app.get('/', (req, res) => {
   pool.query('SELECT NOW()', (e, r) => {
-    res.send(r);
+    console.log('Successfully queried the database')
+    res.send(!!e ? e : r) //send error if exists.
   })
 });
 
