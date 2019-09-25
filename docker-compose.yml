@@ -36,8 +36,21 @@ services:
           - postgres
         build:
             context: PgAdmin4
+    server:
+        container_name: nginx
+        image: nginx
+        ports:
+          - "37101:80"
+        networks: 
+          - frontend
+        build:
+            context: .
+            dockerfile: nginx/Dockerfile
+
 networks:
     postgres:
+        driver: bridge
+    frontend:
         driver: bridge
     
 volumes:
