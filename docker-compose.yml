@@ -1,5 +1,19 @@
 version: "3.7"
 services:
+    api: 
+        container_name: api
+        image: api
+        networks:
+          - postgres
+        ports:
+          - "3000:3000"
+        build:
+          context: api/
+        depends_on:
+          - db
+        environment: 
+          - DATABASE_URL=postgres://postgres:1KSA@fnc@db:5432/postgres
+          - PORT=3000  
     db:
         container_name: postgres
         image: postgres
