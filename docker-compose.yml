@@ -46,7 +46,7 @@ services:
           - frontend
         build:
             context: .
-            dockerfile: nginx/Dockerfile
+            dockerfile: nginx/DOCKERFILE
         depends_on:
           - api
 
