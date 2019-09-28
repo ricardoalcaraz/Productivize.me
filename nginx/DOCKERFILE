@@ -1,8 +1,9 @@
 FROM nginx:alpine
 
 RUN rm /etc/nginx/conf.d/default.conf
-
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
+
+#Copy files that will be served to the client
 COPY ClientApp/index.css /usr/share/nginx/html
 COPY ClientApp/index.html /usr/share/nginx/html
 COPY ClientApp/index.js /usr/share/nginx/html

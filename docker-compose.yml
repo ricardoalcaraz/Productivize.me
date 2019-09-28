@@ -1,29 +1,46 @@
 version: "3.7"
 services:
-    api: 
-        container_name: api
-        image: api
-        networks:
-          - postgres
-          - frontend
-        ports:
-          - "3000:3000"
-        build:
-          context: api/
-        depends_on:
-          - db
-        environment: 
-          - DATABASE_URL=postgres://postgres:1KSA@fnc@db:5432/postgres
-          - PORT=3000  
+    habits_microservice:
+      container_name: habits
+      image: habits
+      networks:
+        - frontend
+        - backend
+      build:
+        context: api/habits/
+      depends_on:
+        - db
+      environment:
+          - DATABASE_URL=backend://postgres:1KSA@fnc@db:5432/postgres
+          - PORT=3001
+    users_microservice:
+      container_name: users
+      image: users
+      networks:
+        - frontend
+        - backend
+      build:
+        context: api/users/
+      depends_on:
+        - db
+      environment:
+          - DATABASE_URL=backend://postgres:1KSA@fnc@db:5432/postgres
+          - PORT=3002
     db:
         container_name: postgres
         image: postgres
         volumes:
           - db-data:/var/lib/postgresql/data
         networks:
-          - postgres
-        ports:
-          - "5432:5432"
+          - backend
+        environment:
+          - PG_MODE=primary
+          - PG_PRIMARY_USER=postgres
+          - PG_PRIMARY_PASSWORD=1KSA@fnc
+          - PG_DATABASE=testdb
+          - PG_USER=admin
+          - PG_PASSWORD=1KSA@fnc
+          - PG_ROOT_PASSWORD=1KSA@fnc
         build: 
             context: Postgres/
     db-admin:
@@ -34,9 +51,10 @@ services:
         volumes:
           - db-admin:/pgdata
         networks:
-          - postgres
-        build:
-            context: PgAdmin4
+          - backend
+        environment:
+          - PGADMIN_DEFAULT_EMAIL=admin@5thcoalition.com
+          - PGADMIN_DEFAULT_PASSWORD=1KSA@fnc
     server:
         container_name: nginx
         image: nginx
@@ -48,10 +66,11 @@ services:
             context: .
             dockerfile: nginx/DOCKERFILE
         depends_on:
-          - api
+          - habits_microservice
+          - users_microservice
 
 networks:
-    postgres:
+    backend:
         driver: bridge
     frontend:
         driver: bridge
