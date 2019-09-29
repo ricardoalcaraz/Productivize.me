@@ -9,4 +9,16 @@ To remove all unused volumes and free up space:
 
 $ docker volume prune
 
-docker exec -it <postgres> bash
+docker image list //view all images.
+
+docker exec -it <name> bash
+
+docker stop <name>
+
+docker rm <name>
+
+docker run -d -p ####:#### -t --rm --name <name> <image>
+
+https://linuxize.com/post/how-to-remove-docker-images-containers-volumes-and-networks/
+
+docker container prune || docker system prune --volume

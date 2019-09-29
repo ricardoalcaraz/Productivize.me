@@ -1,4 +1,3 @@
-
 Docker is a requirement to run this application
 To run the stack, open a terminal window in the root directory and type:
 	docker-compose up --build -d
@@ -22,13 +21,7 @@ postgres is running on port 5432
 	-user is postgres
 	-password is 1KSA@fnc
 	
-nodejs is running port 3000
-
-
-Technologies in use:
-React
-Expressjs/NodeJS
-Kubernetes/Docker Swarm
-nginx as API gateway and reverse proxy
-postgres
-Docker
+nodejs is running port 3000-3003
+1. habits service: 3001
+1. user services: 3002 
+2. authentication services: 3003
