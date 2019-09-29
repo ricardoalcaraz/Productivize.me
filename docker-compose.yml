@@ -7,6 +7,17 @@ services:
       container_name: cache
       networks:
         - backend
+    authentication_microservice:
+      container_name: authentication
+      image: authentication
+      networks:
+        - frontend
+        - backend
+      build: 
+        context: api/authentication/
+      environment:
+        - REDIS_URL=redis://cache
+        - PORT=3003
     habits_microservice:
       container_name: habits
       image: habits
@@ -85,3 +96,4 @@ networks:
 volumes:
     db-data:
     db-admin:
+    redis-cache:
