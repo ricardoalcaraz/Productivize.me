@@ -1,5 +1,12 @@
 version: "3.7"
 services:
+    cache:
+      image: cache
+      build:
+        context: cache/
+      container_name: cache
+      networks:
+        - backend
     habits_microservice:
       container_name: habits
       image: habits
