@@ -2,10 +2,10 @@
   "name": "sessioncache",
   "version": "1.0.0",
   "description": "",
-  "main": "authentication.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node authentication.js"
+    "start": "node src/server.js"
   },
   "author": "5th Coalition",
   "license": "ISC",
