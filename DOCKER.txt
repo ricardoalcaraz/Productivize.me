@@ -1,6 +1,10 @@
 nginx is configured through nginx.conf and placed in the directory /usr/local/nginx/conf, /etc/nginx, or /usr/local/etc/nginx
 
-
+To build a new version of the master image run the following command:
+    docker build -f .\UniversalDockerfile -t cinnabonbon/productivize:GlobalNode .
+then run 
+    docker push cinnabonbon/productivize:GlobalNode
+    
 //--------miguels garbage--------/
 COPY test relativeDir/   # adds "test" to `WORKDIR`/relativeDir/
 COPY test /absoluteDir/  # adds "test" to /absoluteDir/

@@ -5,6 +5,7 @@
   "main": "users.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -L users.js",
     "start": "node users.js"
   },
   "keywords": [],
@@ -17,5 +18,8 @@
     "express-session": "^1.16.2",
     "pg": "^7.12.1",
     "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   }
 }

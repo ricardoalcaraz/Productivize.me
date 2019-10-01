@@ -1,91 +1,84 @@
 version: "3.7"
 services:
-    cache:
-      image: cache
-      build:
-        context: cache/
-      container_name: cache
+  cache:
+    image: redis:buster
+    container_name: cache
+    networks:
+      - backend
+    command: redis-server
+  authentication_microservice:
+    container_name: authentication
+    image: authentication
+    networks:
+      - frontend
+      - backend
+    environment:
+      - REDIS_URL=redis://cache
+      - PORT=3003
+  habits_microservice:
+    container_name: habits
+    image: habits
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - db
+    environment:
+        - DATABASE_URL=backend://postgres:1KSA@fnc@db:5432/postgres
+        - PORT=3001
+  users_microservice:
+    container_name: users
+    image: users
+    networks:
+      - frontend
+      - backend
+    depends_on:
+      - db
+    environment:
+        - DATABASE_URL=backend://postgres:1KSA@fnc@db:5432/postgres
+        - PORT=3002
+  db:
+      container_name: postgres
+      image: postgres
+      volumes:
+        - db-data:/var/lib/postgresql/data
       networks:
         - backend
-    authentication_microservice:
-      container_name: authentication
-      image: authentication
-      networks:
-        - frontend
-        - backend
+      environment:
+        - PG_MODE=primary
+        - PG_PRIMARY_USER=postgres
+        - PG_PRIMARY_PASSWORD=1KSA@fnc
+        - PG_DATABASE=testdb
+        - PG_USER=admin
+        - PG_PASSWORD=1KSA@fnc
+        - PG_ROOT_PASSWORD=1KSA@fnc
       build: 
-        context: api/authentication/
-      environment:
-        - REDIS_URL=redis://cache
-        - PORT=3003
-    habits_microservice:
-      container_name: habits
-      image: habits
+          context: Postgres/
+  db-admin:
+      container_name: pgadmin
+      image: dpage/pgadmin4
+      ports:
+        - "5050:80"
+      volumes:
+        - db-admin:/pgdata
       networks:
-        - frontend
         - backend
-      build:
-        context: api/habits/
-      depends_on:
-        - db
       environment:
-          - DATABASE_URL=backend://postgres:1KSA@fnc@db:5432/postgres
-          - PORT=3001
-    users_microservice:
-      container_name: users
-      image: users
-      networks:
+        - PGADMIN_DEFAULT_EMAIL=admin@5thcoalition.com
+        - PGADMIN_DEFAULT_PASSWORD=1KSA@fnc
+  server:
+      container_name: nginx
+      image: nginx
+      ports:
+        - "37101:80"
+      networks: 
         - frontend
-        - backend
       build:
-        context: api/users/
+          context: .
+          dockerfile: nginx/DOCKERFILE
       depends_on:
-        - db
-      environment:
-          - DATABASE_URL=backend://postgres:1KSA@fnc@db:5432/postgres
-          - PORT=3002
-    db:
-        container_name: postgres
-        image: postgres
-        volumes:
-          - db-data:/var/lib/postgresql/data
-        networks:
-          - backend
-        environment:
-          - PG_MODE=primary
-          - PG_PRIMARY_USER=postgres
-          - PG_PRIMARY_PASSWORD=1KSA@fnc
-          - PG_DATABASE=testdb
-          - PG_USER=admin
-          - PG_PASSWORD=1KSA@fnc
-          - PG_ROOT_PASSWORD=1KSA@fnc
-        build: 
-            context: Postgres/
-    db-admin:
-        container_name: pgadmin
-        image: dpage/pgadmin4
-        ports:
-          - "5050:80"
-        volumes:
-          - db-admin:/pgdata
-        networks:
-          - backend
-        environment:
-          - PGADMIN_DEFAULT_EMAIL=admin@5thcoalition.com
-          - PGADMIN_DEFAULT_PASSWORD=1KSA@fnc
-    server:
-        container_name: nginx
-        image: nginx
-        ports:
-          - "37101:80"
-        networks: 
-          - frontend
-        build:
-            context: .
-            dockerfile: nginx/DOCKERFILE
-        depends_on:
-          - habits_microservice
-          - users_microservice
+        - habits_microservice
+        - users_microservice
 
 networks:
     backend:

@@ -1,18 +1,22 @@
 {
-    "name": "habits_microservice",
-    "version": "1.0.0",
-    "description": "",
-    "main": "habits.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "start": "node habits.js"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-      "body-parser": "^1.19.0",
-      "express": "^4.17.1",
-      "pg": "^7.12.1"
-    }
+  "name": "habits_microservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "habits.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -L habits.js",
+    "start": "node habits.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "pg": "^7.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   }
+}

@@ -1,0 +1,5 @@
+#This image is currently a test image that will have all the dependencies installed into one global file for ease of development
+FROM node:12-alpine
+WORKDIR /app
+# This is ran as one command so the resulting image will only need one extra step to build
+RUN npm install -g nodemon@^1.17.3 connect-redis@^4.0.2 body-parser@^1.19.0 express@^4.17.1 pg@^7.12.1 express-session@^1.16.2 redis@^2.8.0

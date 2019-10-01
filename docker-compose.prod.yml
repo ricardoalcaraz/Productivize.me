@@ -1,0 +1,15 @@
+version: "3.7"
+services:
+  authentication_microservice:
+    image: authentication
+    build: 
+      context: api/authentication/
+  habits_microservice:
+    container_name: habits
+    image: habits
+    build:
+      context: api/habits/
+  users_microservice:
+    image: users
+    build:
+      context: api/users/
