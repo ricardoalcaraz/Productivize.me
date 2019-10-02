@@ -5,7 +5,7 @@
   "main": "habits.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon -L habits.js",
+    "dev": "nodemon --inspect=0.0.0.0 -L habits.js",
     "start": "node habits.js"
   },
   "keywords": [],

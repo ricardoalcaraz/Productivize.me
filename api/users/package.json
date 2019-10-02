@@ -5,7 +5,7 @@
   "main": "users.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon -L users.js",
+    "dev": "nodemon --inspect=0.0.0.0 -L users.js",
     "start": "node users.js"
   },
   "keywords": [],
