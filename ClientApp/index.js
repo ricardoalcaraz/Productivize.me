@@ -2,7 +2,6 @@ $( document ).ready(function() {
     console.log( "ready!" );
     $("#submitButton").on('click', submitClick);
     $("#apiTest").on('click', hitTestEndpoint);
-    jQuery.support.cors = true;
 });
 
 function submitClick(){
