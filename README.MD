@@ -23,25 +23,25 @@
 - After it has finished building, to see the content being served, navigate your browser to:
   - `localhost:37101`
 - To stop the application run this command in the root directory:
-  - `docker-compose stop`.
+  - `docker-compose stop`
 
 <!-- OTHER USEFUL INFORMATION -->
 
 ## <span role="img" aria-label="Sparkles">✨</span> Other Useful Information
 
-- `pgadmin` is running on port `5050` and can be used to administer the database:
+- `pgadmin` is running on port `localhost:5050` and can be used to administer the database:
   - Username:
     - `admin@5thcoalition.com`
   - Password: 
     - `1KSA@fnc`
 	
-- `postgres` is running on port `5432`:
+- `postgres` is running on port `localhost:5432`:
   - Username:
   	- `postgres`
   - Password:
     - `1KSA@fnc`
 	
-- `nodejs` is running port `3000-3003`:
+- `nodejs` is running ports `localhost:3000-3003`:
   - Habits service:
     - `localhost:3001`
   - User services:
