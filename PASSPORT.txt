@@ -1,0 +1,1 @@
+Passport is really cool, it will be treated as middleware. It should go inside it's own folder called "auth", it specifies how to serialize and deserialize data out of the cache. We use `strategies` to describe how we want to validate a user, it also lets us fetch users or user data from our database.

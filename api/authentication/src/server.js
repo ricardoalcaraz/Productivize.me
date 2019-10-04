@@ -1,14 +1,19 @@
+const provider = require('./auth/auth.js');
+const bodyParser = require('body-parser');
 const express = require('express');
-const { session } = require('./session.js');
-const api = require('./api.js');
+const { cache } = require('./cache/cache.js');
+const api = require('./api/api.js');
 const port = process.env.PORT;
 const app = express();
 
 /* MIDDLEWARE */
-app.use(session);
+app.use(bodyParser());
+app.use(cache);
+app.use(provider.initialize());
+app.use(provider.session());
 
-app.get('/auth/visit/', api.visit);
-app.get('/auth/visited/', api.visited);
+/* API */
+api(app);
 
 /* START */
 app.listen(port, () => console.log(`App listening on port: ${port}`));

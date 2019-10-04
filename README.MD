@@ -24,6 +24,7 @@
   - `localhost:37101`
 - To stop the application run this command in the root directory:
   - `docker-compose stop`
+- If you are running a dev environment, make sure that you run `npm i` inside each of the microservices before running `docker-compose up --build -d`.
 
 <!-- OTHER USEFUL INFORMATION -->
 

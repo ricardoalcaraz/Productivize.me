@@ -12,7 +12,7 @@ redisClient.on('error', (err) => {
 // "name" will show up as your cookie name in the browser
 // "cookie" is provided by default; you can add it to add additional personalized options
 // The "store" ttl is the expiration time for each Redis session ID, in seconds
-module.exports.session = session({
+module.exports.cache = session({
   secret: 'ssshhhhh',
   // create new redis store.
   name: "productivize_me_authentication_token",
