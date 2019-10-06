@@ -12,8 +12,12 @@ services:
     networks:
       - frontend
       - backend
+    depends_on: 
+      - cache
     environment:
-      - REDIS_URL=redis://cache
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - CACHE_URL=${CACHE_URL}
       - PORT=3003
   habits_microservice:
     container_name: habits
@@ -23,9 +27,11 @@ services:
       - backend
     depends_on:
       - db
+      - cache
     environment:
-        - DATABASE_URL=backend://postgres:1KSA@fnc@db:5432/postgres
-        - PORT=3001
+      - CACHE_URL=${CACHE_URL}
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=3001
   users_microservice:
     container_name: users
     image: users
@@ -34,9 +40,11 @@ services:
       - backend
     depends_on:
       - db
+      - cache
     environment:
-        - DATABASE_URL=backend://postgres:1KSA@fnc@db:5432/postgres
-        - PORT=3002
+      - CACHE_URL=${CACHE_URL}
+      - DATABASE_URL=${DATABASE_URL}
+      - PORT=3002
   db:
       container_name: postgres
       image: postgres
@@ -45,13 +53,13 @@ services:
       networks:
         - backend
       environment:
-        - PG_MODE=primary
-        - PG_PRIMARY_USER=postgres
-        - PG_PRIMARY_PASSWORD=1KSA@fnc
-        - PG_DATABASE=testdb
-        - PG_USER=admin
-        - PG_PASSWORD=1KSA@fnc
-        - PG_ROOT_PASSWORD=1KSA@fnc
+        - PG_MODE=${PG_MODE}
+        - PG_PRIMARY_USER=${PG_PRIMARY_USER}
+        - PG_PRIMARY_PASSWORD=${PG_PRIMARY_PASSWORD}
+        - PG_DATABASE=${PG_DATABASE}
+        - PG_USER=${PG_USER}
+        - PG_PASSWORD=${PG_PASSWORD}
+        - PG_ROOT_PASSWORD=${PG_ROOT_PASSWORD}
       build: 
           context: Postgres/
   db-admin:
@@ -64,8 +72,8 @@ services:
       networks:
         - backend
       environment:
-        - PGADMIN_DEFAULT_EMAIL=admin@5thcoalition.com
-        - PGADMIN_DEFAULT_PASSWORD=1KSA@fnc
+        - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+        - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
   server:
       container_name: nginx
       image: nginx

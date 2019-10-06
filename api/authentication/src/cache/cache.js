@@ -1,6 +1,7 @@
 const session = require('express-session');
 const redis = require('redis');
-const redisClient = redis.createClient(process.env.REDIS_URL);
+const { REDIS_URL, REDIS_SECRET, REDIS_TOKEN } = require('../config/config.js');
+const redisClient = redis.createClient(REDIS_URL);
 const redisStore = require('connect-redis')(session);
 
 redisClient.on('error', (err) => {
@@ -12,10 +13,9 @@ redisClient.on('error', (err) => {
 // "name" will show up as your cookie name in the browser
 // "cookie" is provided by default; you can add it to add additional personalized options
 // The "store" ttl is the expiration time for each Redis session ID, in seconds
-module.exports.cache = session({
-  secret: 'ssshhhhh',
-  // create new redis store.
-  name: "productivize_me_authentication_token",
+module.exports = session({
+  secret: REDIS_SECRET,
+  name: REDIS_TOKEN,
   store: new redisStore({ client: redisClient }),
   saveUninitialized: false,
   resave: false

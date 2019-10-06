@@ -1,7 +1,8 @@
 const provider = require('./auth/auth.js');
 const bodyParser = require('body-parser');
 const express = require('express');
-const { cache } = require('./cache/cache.js');
+const cache = require('./cache/cache.js');
+const { PORT } = require('./config/config.js');
 const api = require('./api/api.js');
 const app = express();
 
@@ -15,4 +16,4 @@ app.use(provider.session());
 api(app);
 
 /* START */
-app.listen(port, () => console.log(`App listening on port: ${port}`));
+app.listen(PORT, () => console.log(`App listening on port: ${PORT}`));
