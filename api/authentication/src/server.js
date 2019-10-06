@@ -1,4 +1,4 @@
-const provider = require('./auth/auth.js');
+const security = require('./auth/auth.js');
 const bodyParser = require('body-parser');
 const express = require('express');
 const cache = require('./cache/cache.js');
@@ -9,11 +9,11 @@ const app = express();
 /* MIDDLEWARE */
 app.use(bodyParser.json());
 app.use(cache);
-app.use(provider.initialize());
-app.use(provider.session());
+app.use(security.initialize());
+app.use(security.session());
 
 /* API */
-api(app);
+api(app, null, security);
 
 /* START */
 app.listen(PORT, () => console.log(`App listening on port: ${PORT}`));

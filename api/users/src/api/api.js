@@ -1,11 +1,9 @@
-const { requiresAuthentication } = require('../auth/auth.js');
-
-module.exports = (app, db) => {
-  app.get('/users/GetUsers', requiresAuthentication, (req, res) => {
+module.exports = (app, db, security) => {
+  app.get('/users/GetUsers', security.authenticate('cache'), (req, res) => {
     res.json({ status: 'success' });
   });
 
-  app.get('/users', requiresAuthentication, (req, res) => {
+  app.get('/users', security.authenticate('cache'), (req, res) => {
     db.Query();
     res.json({ status: 'success' });
   });

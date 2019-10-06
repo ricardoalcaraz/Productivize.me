@@ -27,9 +27,6 @@ passport.use(new GoogleStrategy(
   },
   function (accessToken, refreshToken, profile, done) {
     return done(null, { id: profile.id })
-    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-    //   return done(err, user);
-    // });
   }
 ));
 
@@ -38,7 +35,7 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(function (id, done) {
-  done(null, { id: "fart" });
+  done(null, { id });
 });
 
 module.exports = passport;
