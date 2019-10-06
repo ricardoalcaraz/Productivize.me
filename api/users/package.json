@@ -2,11 +2,11 @@
   "name": "users_microservice",
   "version": "1.0.0",
   "description": "",
-  "main": "users.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --inspect=0.0.0.0 -L users.js",
-    "start": "node users.js"
+    "dev": "nodemon --inspect=0.0.0.0 -L src/server.js",
+    "start": "node src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,8 @@
     "connect-redis": "^4.0.2",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "passport": "^0.4.0",
+    "passport-custom": "^1.1.0",
     "pg": "^7.12.1",
     "redis": "^2.8.0"
   },

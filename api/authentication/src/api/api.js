@@ -1,25 +1,31 @@
-
 const passport = require('passport');
 
 module.exports = (app, repo) => {
-
-  app.get('/auth/local/', function (req, res) {
-    res.sendFile(__dirname + '/local.html');
+  app.get('/auth/logout', function (req, res) {
+    req.logout();
+    req.session.destroy(function (err) {
+      if (!err) {
+        res.json({ status: 'unauthorized' });
+      } else {
+        // handle error case...
+      }
+    });
   });
 
-  app.post('/auth/local/', passport.authenticate('local'), function (req, res) {
-    console.log(req.body.msg);
-    res.send("" + Object.keys(req.user));
+  app.post('/auth/login/', passport.authenticate('local'), function (req, res) {
+    console.log('Local Authentication Success: ' + req.sessionID + ' ' + Object.getOwnPropertyNames(req.session.cookie));
+    res.json(req.session.user = req.user);
   });
 
-  app.get('/auth/visit/', function (req, res) {
-    const v = req.session.visits;
-    req.session.visits = !!v ? v + 1 : 1;
-    res.send("Viadfdafdaasdadsfg..");
-  });
+  app.get('/auth/google/', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
 
-  app.get('/auth/visited/', function (req, res) {
-    console.log('Testing auth');
-    res.send(`Visits: ${req.session.visits}`);
-  });
+  app.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/auth/login' }),
+    function (req, res) {
+      console.log('Google Authentication Success: ' + req.user.id);
+      req.session.user = req.user;
+      res.json(req.session.user = req.user);
+    }
+  );
+
 }

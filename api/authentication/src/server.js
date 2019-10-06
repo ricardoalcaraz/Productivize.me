@@ -3,11 +3,10 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const { cache } = require('./cache/cache.js');
 const api = require('./api/api.js');
-const port = process.env.PORT;
 const app = express();
 
 /* MIDDLEWARE */
-app.use(bodyParser());
+app.use(bodyParser.json());
 app.use(cache);
 app.use(provider.initialize());
 app.use(provider.session());
