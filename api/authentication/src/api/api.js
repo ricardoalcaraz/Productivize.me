@@ -1,4 +1,9 @@
 module.exports = (app, repo, security) => {
+
+  app.get('/auth/error', function (req, res) {
+    res.status('401').json({ status: 'bad' });
+  });
+
   app.get('/auth/logout', function (req, res) {
     req.logout();
     req.session.destroy(function (err) {

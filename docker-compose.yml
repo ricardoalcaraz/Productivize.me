@@ -9,6 +9,8 @@ services:
   authentication_microservice:
     container_name: authentication
     image: authentication
+    volumes:
+      - logs:${LOG_PATH}
     networks:
       - frontend
       - backend
@@ -18,10 +20,13 @@ services:
       - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
       - CACHE_URL=${CACHE_URL}
+      - LOG_PATH=${LOG_PATH}
       - PORT=3003
   habits_microservice:
     container_name: habits
     image: habits
+    volumes:
+      - logs:${LOG_PATH}
     networks:
       - frontend
       - backend
@@ -35,6 +40,8 @@ services:
   users_microservice:
     container_name: users
     image: users
+    volumes:
+      - logs:/logs
     networks:
       - frontend
       - backend
@@ -44,6 +51,7 @@ services:
     environment:
       - CACHE_URL=${CACHE_URL}
       - DATABASE_URL=${DATABASE_URL}
+      - LOG_PATH=${LOG_PATH}
       - PORT=3002
   db:
       container_name: postgres
@@ -98,3 +106,4 @@ volumes:
     db-data:
     db-admin:
     redis-cache:
+    logs:

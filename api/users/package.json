@@ -16,10 +16,12 @@
     "connect-redis": "^4.0.2",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
+    "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-custom": "^1.1.0",
     "pg": "^7.12.1",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "rotating-file-stream": "^1.4.4"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"

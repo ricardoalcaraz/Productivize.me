@@ -14,10 +14,14 @@
     "connect-redis": "^4.0.2",
     "express": "^4.17.1",
     "express-session": "^1.16.2",
-    "redis": "^2.8.0",
+    "express-winston": "^4.0.0",
+    "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-google-oauth": "^2.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "redis": "^2.8.0",
+    "rotating-file-stream": "^1.4.4",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"

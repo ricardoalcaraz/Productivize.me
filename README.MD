@@ -24,7 +24,7 @@
   - `localhost:37101`
 - To stop the application run this command in the root directory:
   - `docker-compose stop`
-- If you are running a dev environment, make sure that you run `npm i` inside each of the microservices before running `docker-compose up --build -d`.
+
 
 <!-- OTHER USEFUL INFORMATION -->
 
@@ -50,6 +50,10 @@
   - Authentication services:
     - `localhost:3003`
 
+## <span role="img" aria-label="Personal Computer">💻</span> Developer Tips
+
+- _If you are running a dev environment, make sure that you run `npm i` inside each of the microservices before running `docker-compose up --build -d`._
+- _To view logs for a microservice we must enter the container with => `docker exec -it <container_name> <sh|bin/bash>`, then view the logs from the root directory => `cat ../logs/<file_name>.log`._
 <!-- CONTRIBUTORS -->
 
 ## <span role="img" aria-label="Globe With Meridians">🌐</span> Contributors
