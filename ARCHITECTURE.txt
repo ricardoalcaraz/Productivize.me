@@ -6,3 +6,5 @@ Miguel's 6 Microservice Mandates:
 4. databases will be behind a repository layer.
 5. the repository layer will contain all of our business logic.
 6. fuck it lmao.
+
+?? the api should return json only.

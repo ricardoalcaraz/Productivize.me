@@ -1,0 +1,2 @@
+Insomnia tests are currently stored in the insomnia json file, please login first to receive the authentication cookie. other endpoints will be accessable after.
+currently the only authenticated user is 'miguel'
