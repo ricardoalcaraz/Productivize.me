@@ -5,3 +5,5 @@ Use a pool if you have or expect to have multiple concurrent requests. That is l
 In that case you definitely do not want to call pool.end() when your query completes, you want to reserve that for when your application terminates because pool.end() disposes of all the open client instances. (Remember, the point is to keep up to a fixed number of client instances available.)
 
 postgres connection string => 'postgres://username:password@host:port/database'
+
+https://node-postgres.com/
