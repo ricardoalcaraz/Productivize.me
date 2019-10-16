@@ -1,37 +1,203 @@
 #%RAML 1.0
-title: User Habit API
-baseUri: productivize.me/api
-version: v1
-types:
-  UserHabit:
-    type: object
-    properties:
-      UserName: string
-      HabitDescription: string
-      HabitFrequency: string
-
-  UserProfile:
-    type: object
-    properties:
-      UserID: string
-      UserName: string
-      CreatedOn: datetime
-      LastLogin: datetime
-
-/habits/GetAllUserHabits:
+title: Productivize API
+baseUri: https://productivize.me/api
+version: v0.4.20
+baseUriParameters: {}
+documentation:
+- title: Productivize API
+  content: 'TODO'
+securitySchemes:
+  auth:
+    type: TODO
+    describedBy:
+      queryParameters:
+        TODO:
+          required: TODO
+          displayName: TODO
+          description: TODO
+          type: TODO
+          
+/plants:
   get:
-    queryParameters:
-      userName:
+    description: List all plants.
+  /{plantID}:
+    get:
+      description: Returns the plant.
 
-/habit/InsertUserHabit:
-  post:
-    description: This POST operation will insert a user habit so the system can track it
-    body:
-      application/json:
-        type: UserHabit
-    
-#GetHabits
-#GetUser
-#GetUserHabits
-#GetUserStats
-
+/users:
+  get: 
+    description: List all users matching query criteria, if provided, otherwise list all users.
+    queryParameters: 
+            lastActive:
+              displayName: Last Active
+              type: date
+              description: The last recorded date of activity in the format of yyyy-mm-dd
+              example: 2019-01-01
+              required: false
+            createdOn:
+              displayName: Created On
+              type: date
+              description: The date the account was created on in the format of yyyy-mm-dd
+              example: 2019-01-01
+              required: false
+            name:
+              displayName: Name
+              type: string
+              description: The name associated with the account.
+              example: BoJack Horseman
+              required: false
+  /{userID}:
+    get:
+      description: Returns the user.
+    post:
+      description: Creates a new user or updates an existing user.
+      queryParameters: 
+              name:
+                displayName: Name
+                type: string
+                description: The name associated with the user.
+                example: BoJack Horseman
+                required: true
+    delete:
+      description: Deletes the user.
+    /habits:
+      get:
+        description: Lists all habits matching query criteria, if provided, otherwise lists all of a user's habits.
+        queryParameters: 
+                name:
+                  displayName: Name
+                  type: string
+                  description: The name associated with the habit.
+                  example: Dental Hygiene
+                  required: false
+                startDate:
+                  displayName: Start Date
+                  type: datetime
+                  description: The starting date and time for the habit in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
+                  example: 2008-09-15T15:53:00+05:00
+                  required: false
+                endDate:
+                  displayName: End Date
+                  type: datetime
+                  description: The ending date and time for the habit in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
+                  example: 2008-09-15T15:53:00+05:00
+                  required: false
+                frequency:
+                  displayName: Frequency
+                  type: frequency
+                  description: The frequency at which the habit will reoccur.
+                  example: Weekly
+                  required: false
+      /{habitID}:
+        get:
+          description: Returns a habit.
+        post:
+          description: Creates a new habit or updates an existing habit.
+          queryParameters: 
+                  name:
+                    displayName: Name
+                    type: string
+                    description: The name associated with the habit.
+                    example: Dental Hygiene
+                    required: true
+                  description: 
+                    displayName: Description
+                    type: string
+                    description: Additional information about a habit.
+                    example: Good dental health for future me!
+                    required: false
+                  startDate:
+                    displayName: Start Date
+                    type: datetime
+                    description: The starting date and time for the habit in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
+                    example: 2008-09-15T15:53:00+05:00
+                    required: true
+                  endDate:
+                    displayName: End Date
+                    type: datetime
+                    description: The ending date and time for the habit in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
+                    example: 2008-09-15T15:53:00+05:00
+                    required: false
+                  frequency:
+                    displayName: Frequency
+                    type: frequency
+                    description: The frequency at which the habit will reoccur.
+                    example: Monthly
+                    required: true
+                  tasks:
+                    displayName: Tasks
+                    type: ids
+                    description: Tasks associated with the habit.
+                    example: 15628,15225,15789,15303,15819
+                    required: true
+        delete:
+          description: Deletes the habit.
+    /tasks:
+      get:
+        description: Lists all tasks matching query criteria, if provided, otherwise lists all of a user's tasks.
+        queryParameters: 
+                name:
+                  displayName: Name
+                  type: string
+                  description: The name associated with the Task.
+                  example: Brush Teeth
+                  required: false
+                completed:
+                  displayName: Completed
+                  type: boolean
+                  description: The completion status of the Task
+                  example: true
+                  required: false
+                timeRemaining:
+                  displayName: Time Remaining
+                  type: time
+                  description: The total time remaining on the Task.
+                  example: 15:53:00
+                  required: false
+                deadline:
+                  displayName: deadline
+                  type: datetime
+                  description: The datetime deadline for the task in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
+                  example: 2008-09-15T15:53:00+05:00
+                  required: false
+      /{taskID}:
+        get:
+          description: Returns the task.
+        post:
+          description: Creates a new task or updates an existing task.
+          queryParameters:  
+              name:
+                displayName: Name
+                type: string
+                description: The name associated with the Task.
+                example: Brush Teeth
+                required: false
+              completed:
+                displayName: Completed
+                type: boolean
+                description: The completion status of the Task
+                example: true
+                required: false
+              timeRemaining:
+                displayName: Time Remaining
+                type: time
+                description: The total time remaining on the Task.
+                example: 15:53:00
+                required: false
+              deadline:
+                displayName: deadline
+                type: datetime
+                description: The datetime deadline for the task in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
+                example: 2008-09-15T15:53:00+05:00
+                required: false
+              subtasks:
+                displayName: Subtasks
+                type: ids
+                description: Subtasks associated with the Task.
+                example: 15628,15225,15789,15303,15819
+                required: true
+        delete:
+          description: Deletes the task.
+    /garden:
+        get:
+          description: Returns the user's garden.
