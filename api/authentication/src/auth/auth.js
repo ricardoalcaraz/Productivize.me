@@ -1,7 +1,7 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL } = require("../config/config.js");
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_CALLBACK_URL } = require('../config/config.js')
 
 passport.use(new LocalStrategy(
   {
@@ -9,15 +9,15 @@ passport.use(new LocalStrategy(
     passwordField: 'password'
   },
   function (username, password, done) {
-    if (username === "miguel") {
-      console.log(`${username} is valid...\n\tProceeding...`);
+    if (username === 'miguel') {
+      console.log(`${username} is valid...\n\tProceeding...`)
       return done(null, { id: 1, habits: 1 })
     } else {
-      console.log(`${username} is INVALID.`);
-      return done(null, false, { message: "Error" })
+      console.log(`${username} is INVALID.`)
+      return done(null, false, { message: 'Error' })
     }
   }
-));
+))
 
 passport.use(new GoogleStrategy(
   {
@@ -28,14 +28,14 @@ passport.use(new GoogleStrategy(
   function (accessToken, refreshToken, profile, done) {
     return done(null, { id: profile.id })
   }
-));
+))
 
 passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
+  done(null, user.id)
+})
 
 passport.deserializeUser(function (id, done) {
-  done(null, { id });
-});
+  done(null, { id })
+})
 
-module.exports = passport;
+module.exports = passport

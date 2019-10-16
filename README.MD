@@ -54,6 +54,8 @@
 
 - _If you are running a dev environment, make sure that you run `npm i` inside each of the microservices before running `docker-compose up --build -d`._
 - _To view logs for a microservice we must enter the container with => `docker exec -it <container_name> <sh|bin/bash>`, then view the logs from the root directory => `cat ../logs/<file_name>.log`._
+- We enforce code standards using eslint, you can run it automtically by installing the dependencies by running `npm i` in the root directory. Download eslint for visual studio, settings are configured in the `.vscode` folder.
+
 <!-- CONTRIBUTORS -->
 
 ## <span role="img" aria-label="Globe With Meridians">🌐</span> Contributors
