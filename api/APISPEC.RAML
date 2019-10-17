@@ -16,14 +16,23 @@ securitySchemes:
           displayName: TODO
           description: TODO
           type: TODO
-          
+
 /plants:
   get:
     description: List all plants.
+    responses:
+        200:
+          body:
+            application/json:
+              example: { "data": [ {"id":"1", "name":"Sunflower", "description":"Sunflowers follow the sun throughout the day!"}, {"id":"2", "name":"Ball Cactus", "description":"This is a very sharp plant. Always handle with care!"} ] }
   /{plantID}:
     get:
       description: Returns the plant.
-
+      responses:
+        200:
+          body:
+            application/json:
+              example: { "data": { "id":"1", "name":"Sunflower", "description":"Sunflowers follow the sun throughout the day!" } }
 /users:
   get: 
     description: List all users matching query criteria, if provided, otherwise list all users.
@@ -46,20 +55,82 @@ securitySchemes:
               description: The name associated with the account.
               example: BoJack Horseman
               required: false
+    responses:
+      200:
+        body:
+          application/json:
+            example: { "data": [ {"id":"1", "name":"BoJack", "createdOn":"2019-01-01", "lastActive":"2019-02-01"}, {"id":"2", "name":"Cinna", "createdOn":"2019-01-01", "lastActive":"2019-02-02" } ] }
+      422:
+        body:
+          application/json:
+            example: { "error":"Invalid Date! Last Active date must be in the past."
   /{userID}:
     get:
       description: Returns the user.
+      responses:
+      200:
+        body:
+          application/json:
+            example: { "data": {"id":"1", "name":"BoJack", "createdOn":"2019-01-01", "lastActive":"2019-02-01"} }
+      404:
+        body:
+          application/json:
+            example: { "error": "User could not be found!" }
     post:
       description: Creates a new user or updates an existing user.
-      queryParameters: 
-              name:
-                displayName: Name
-                type: string
-                description: The name associated with the user.
-                example: BoJack Horseman
-                required: true
+      body:
+        application/json:
+          type: |
+            {
+              "definitions": {},
+              "$schema": "http://json-schema.org/draft-07/schema#",
+              "$id": "http://example.com/root.json",
+              "type": "object",
+              "title": "The Root Schema",
+              "required": |
+                [
+                  "name"
+                ],
+              "properties":  |
+                {
+                  "name":  |
+                    {
+                      "$id": "#/properties/name",
+                      "type": "string",
+                      "title": "The Name Schema",
+                      "default": "",
+                      "examples": | 
+                        [
+                          "Bojack Horseman"
+                        ],
+                      "pattern": "^(.*)$"
+                    }
+                }
+            }
+          example: |
+            { 
+              "name":"Bojack Horseman"
+            }
+      responses:
+        200:
+          body:
+            application/json:
+              example: { "data":{ "action":"create" } }
+        422:
+          body:
+            application/json:
+              example: { "error": "Invalid Name! Length must exceed 3 characters." }
     delete:
       description: Deletes the user.
+       responses:
+        200:
+          body:
+            application/json:
+              example: { "data":{ "action":"delete" } }
+        404:
+          body:
+            application/json:
+              example: { "error": "The client has requested access to data that does not exist." }
     /habits:
       get:
         description: Lists all habits matching query criteria, if provided, otherwise lists all of a user's habits.
@@ -88,50 +159,156 @@ securitySchemes:
                   description: The frequency at which the habit will reoccur.
                   example: Weekly
                   required: false
+        responses:
+          200:
+            body:
+              application/json: 
+                example: { "data":{ [ {"id":"1", "description":"Dental Hygiene", "createdOn":"2019-01-15", "startDate":"2019-01-17", "endDate":"", frequency:"Daily"}, {"id":"2", "description":"Guitar Practice", "createdOn":"2019-03-22", "startDate":"2019-03-22", "endDate":"2022-01-30", frequency:"Daily"} ] } }
+          422:
+            body:
+              application/json:
+                example: { "error":"Invalid Name! Length must exceed a minimum of 3 characters." }
       /{habitID}:
         get:
           description: Returns a habit.
+          responses:
+            200:
+              body:
+                application/json: 
+                  example: { "data": {"id":"1", "description":"Dental Hygiene", "createdOn":"2019-01-15", "startDate":"2019-01-17", "endDate":"", frequency:"Daily"} }
+            404:
+              body:
+                application/json:
+                  example: { "error":"Habit could not be found!" }
         post:
           description: Creates a new habit or updates an existing habit.
-          queryParameters: 
-                  name:
-                    displayName: Name
-                    type: string
-                    description: The name associated with the habit.
-                    example: Dental Hygiene
-                    required: true
-                  description: 
-                    displayName: Description
-                    type: string
-                    description: Additional information about a habit.
-                    example: Good dental health for future me!
-                    required: false
-                  startDate:
-                    displayName: Start Date
-                    type: datetime
-                    description: The starting date and time for the habit in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
-                    example: 2008-09-15T15:53:00+05:00
-                    required: true
-                  endDate:
-                    displayName: End Date
-                    type: datetime
-                    description: The ending date and time for the habit in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
-                    example: 2008-09-15T15:53:00+05:00
-                    required: false
-                  frequency:
-                    displayName: Frequency
-                    type: frequency
-                    description: The frequency at which the habit will reoccur.
-                    example: Monthly
-                    required: true
-                  tasks:
-                    displayName: Tasks
-                    type: ids
-                    description: Tasks associated with the habit.
-                    example: 15628,15225,15789,15303,15819
-                    required: true
+          body:
+            application/json:
+              type: |
+                {
+                  "definitions": {},
+                  "$schema": "http://json-schema.org/draft-07/schema#",
+                  "$id": "http://example.com/root.json",
+                  "type": "object",
+                  "title": "The Root Schema",
+                  "required": |
+                    [
+                      "name",
+                      "description",
+                      "startDate",
+                      "frequency",
+                      "tasks"
+                    ],
+                  "properties": |
+                    {
+                      "name": |
+                        {
+                          "$id": "#/properties/name",
+                          "type": "string",
+                          "title": "The Name Schema",
+                          "default": "",
+                          "examples": |
+                            [
+                              "Dental Hygiene"
+                            ],
+                          "pattern": "^(.*)$"
+                        },
+                      "description": |
+                        {
+                          "$id": "#/properties/description",
+                          "type": "string",
+                          "title": "The Description Schema",
+                          "default": "",
+                          "examples": |
+                            [
+                              "It's good for ya!"
+                            ],
+                          "pattern": "^(.*)$"
+                        },
+                      "startDate": |
+                        {
+                          "$id": "#/properties/startDate",
+                          "type": "string",
+                          "title": "The Startdate Schema",
+                          "default": "",
+                          "examples": |
+                            [
+                              "2008-09-15T15:53:00+05:00"
+                            ],
+                          "pattern": "/(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/"
+                        },
+                      "endDate": |
+                        {
+                          "$id": "#/properties/startDate",
+                          "type": "string",
+                          "title": "The Startdate Schema",
+                          "default": "",
+                          "examples": |
+                            [
+                              "2008-09-15T15:53:00+05:00"
+                            ],
+                          "pattern": "/(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d([+-][0-2]\d:[0-5]\d|Z))/"
+                        },
+                      "frequency": |
+                        {
+                          "$id": "#/properties/frequency",
+                          "type": "string",
+                          "title": "The Frequency Schema",
+                          "default": "",
+                          "examples": |
+                            [
+                              "Weekly"
+                            ],
+                          "pattern": "^(.*)$"
+                        },
+                      "tasks": |
+                        {
+                          "$id": "#/properties/tasks",
+                          "type": "array",
+                          "title": "The Tasks Schema",
+                          "items": |
+                            {
+                              "$id": "#/properties/tasks/items",
+                              "type": "integer",
+                              "title": "The Items Schema",
+                              "default": 0,
+                              "examples": |
+                                [
+                                  3,
+                                  1
+                                ]
+                            }
+                        }
+                    }
+                }
+              example: |
+                {
+                  "name": "Dental Hygiene",
+                  "description": "It's good for ya!",
+                  "startDate": "2008-09-15T15:53:00+05:00",
+                  "frequency": "Weekly",
+                  "tasks": [ 3, 1 ]
+                }
+          response:
+            200:
+              body:
+                application/json:
+                  example: { "data":{ "action":"update" } }
+            422:
+              body:
+                application/json:
+                  example: { "error": "Invalid Frequency! Biweekly is invalid." }
         delete:
           description: Deletes the habit.
+          responses:
+            200:
+              body:
+                application/json:
+                  example: { "data":{ "action":"delete" } }
+            404:
+              body:
+                application/json:
+                  example: { "error": "The client has requested access to data that does not exist." }
     /tasks:
       get:
         description: Lists all tasks matching query criteria, if provided, otherwise lists all of a user's tasks.
@@ -160,44 +337,164 @@ securitySchemes:
                   description: The datetime deadline for the task in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
                   example: 2008-09-15T15:53:00+05:00
                   required: false
+        responses:
+          200:
+            body:
+              application/json: 
+                example: { "data": [{ "id":"1", "reminders":["2019-01-01T07:30:00-05:00"], "name":"Brush Teeth", "description":"It's good for you.", "completed":"false", timeRemaining:"00:02:30", "subtasks":[] }, { "id":"2", "reminders":["2019-01-01T07:45:00-05:00"], "name":"Run 1 Mile", "description":"You can do it!", "completed":"false", timeRemaining:"00:15:00", "subtasks":[] }] }
+          422:
+            body:
+              application/json:
+                example: { "error":"Invalid Name! Length must exceed a minimum of 3 characters." }
       /{taskID}:
         get:
           description: Returns the task.
+          responses:  
+            200:
+              body:
+                application/json: 
+                  example: { "data": { "id":"1", "reminders":["2019-01-01T07:30:00-05:00"], "name":"Brush Teeth", "description":"It's good for you.", "completed":"false", timeRemaining:"00:02:30", "subtasks":[] } }
+            422:
+              body:
+                application/json:
+                  example: { "error":"Invalid Name! Length must exceed a minimum of 3 characters." }
         post:
           description: Creates a new task or updates an existing task.
-          queryParameters:  
-              name:
-                displayName: Name
-                type: string
-                description: The name associated with the Task.
-                example: Brush Teeth
-                required: false
-              completed:
-                displayName: Completed
-                type: boolean
-                description: The completion status of the Task
-                example: true
-                required: false
-              timeRemaining:
-                displayName: Time Remaining
-                type: time
-                description: The total time remaining on the Task.
-                example: 15:53:00
-                required: false
-              deadline:
-                displayName: deadline
-                type: datetime
-                description: The datetime deadline for the task in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
-                example: 2008-09-15T15:53:00+05:00
-                required: false
-              subtasks:
-                displayName: Subtasks
-                type: ids
-                description: Subtasks associated with the Task.
-                example: 15628,15225,15789,15303,15819
-                required: true
+          body:
+            application/json:
+              type: |
+                {
+                  "definitions": {},
+                  "$schema": "http://json-schema.org/draft-07/schema#",
+                  "$id": "http://example.com/root.json",
+                  "type": "object",
+                  "title": "The Root Schema",
+                  "required": |
+                    [
+                      "name",
+                      "completed",
+                      "timeRemaining",
+                      "reminders",
+                      "subtasks"
+                    ],
+                  "properties": |
+                    {
+                      "name": |
+                        {
+                          "$id": "#/properties/name",
+                          "type": "string",
+                          "title": "The Name Schema",
+                          "default": "",
+                          "examples": |
+                            [
+                              "Brush Teeth"
+                            ],
+                          "pattern": "^(.*)$"
+                        },
+                      "completed": |
+                        {
+                          "$id": "#/properties/completed",
+                          "type": "string",
+                          "title": "The Completed Schema",
+                          "default": "",
+                          "examples": |
+                            [
+                              "true"
+                            ],
+                          "pattern": "^(.*)$"
+                        },
+                      "timeRemaining": |
+                        {
+                          "$id": "#/properties/timeRemaining",
+                          "type": "string",
+                          "title": "The Timeremaining Schema",
+                          "default": "",
+                          "examples": |
+                            [
+                              "00:01:28"
+                            ],
+                          "pattern": "/^([01]?\d|2[0-3]):([0-5]\d):([0-5]\d)$/"
+                        },
+                      "reminders": |
+                        {
+                          "$id": "#/properties/reminders",
+                          "type": "array",
+                          "title": "The Reminders Schema",
+                          "items": |
+                            {
+                              "$id": "#/properties/reminders/items",
+                              "type": "string",
+                              "title": "The Items Schema",
+                              "default": "",
+                              "examples": |
+                                [
+                                  "2008-09-15T15:53:00+05:00"
+                                ],
+                              "pattern": "/(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/"
+                            }
+                        },
+                      "subtasks": |
+                        {
+                          "$id": "#/properties/subtasks",
+                          "type": "array",
+                          "title": "The Subtasks Schema",
+                          "items": |
+                            {
+                              "$id": "#/properties/subtasks/items",
+                              "type": "integer",
+                              "title": "The Items Schema",
+                              "default": 0,
+                              "examples": |
+                                [ 
+                                  123, 
+                                  331, 
+                                  74 
+                                ]
+                            }
+                        }
+                    }
+                }
+              example: |
+                { 
+                  "name":"Brush Teeth",
+                  "completed":"true",
+                  "timeRemaining":"00:01:28",
+                  "reminders": |
+                    [ 
+                      "2008-09-15T15:53:00+05:00" 
+                    ],
+                  "subtasks": | 
+                    [
+                      123, 
+                      331, 
+                      74 
+                    ]
+                }
+          response:
+            200:
+              body:
+                application/json:
+                  example: { "data":{ "action":"update" } }
+            422:
+              body:
+                application/json:
+                  example: { "error": "Invalid Time! Remaining time must be longer than 0 seconds." }
         delete:
           description: Deletes the task.
+          responses:
+            200:
+              body:
+                application/json:
+                  example: { "data":{ "action":"delete" } }
+            404:
+              body:
+                application/json:
+                  example: { "error": "The client has requested access to data that does not exist." }
     /garden:
-        get:
+      get:
           description: Returns the user's garden.
+          responses:
+            200:
+              body:
+                application/json:
+                  example: { "data": [ { "id":"1", "level":"3" }, { "id":"2", "level":"2" }, { "id":"4", "level":"1" }, { "id":"5", "level":"1" } ] }
