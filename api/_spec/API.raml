@@ -19,14 +19,14 @@ securitySchemes:
           description: TODO
           type: TODO
 types: 
-  users: !include users.schema.json
-  user: !include user.schema.json
-  habits: !include habits.schema.json
-  habit: !include habit.schema.json
-  tasks: !include tasks.schema.json
-  task: !include task.schema.json
-  plants: !include plants.schema.json
-  plant: !include plant.schema.json
+  users: !include schema/users.json
+  user: !include schema/user.json
+  habits: !include schema/habits.json
+  habit: !include schema/habit.json
+  tasks: !include schema/tasks.json
+  task: !include schema/task.json
+  plants: !include schema/plants.json
+  plant: !include schema/plant.json
   result: |
     {
       "definitions": {},
@@ -152,18 +152,18 @@ securedBy: []
 /plants:
   type: 
     collection:
-      exampleCollecion: !include plants.sample.json
-      exampleItem: !include plant.sample.json
+      exampleCollecion: !include sample/plants.json
+      exampleItem: !include sample/plant.json
        
   /{plantID}:
     type:
       collection-item:
-        exampleItem: !include plant.sample.json
+        exampleItem: !include sample/plant.json
 /users:
   type: 
     collection:
-      exampleCollecion: !include users.sample.json
-      exampleCollecion: !include user.sample.json
+      exampleCollecion: !include sample/users.json
+      exampleCollecion: !include sample/user.json
         
   get: 
     queryParameters: 
@@ -188,12 +188,12 @@ securedBy: []
   /{userID}:
     type:
       collection-item:
-        exampleItem: !include user.sample.json
+        exampleItem: !include sample/user.json
     /habits:
       type:
         collection:
-          exampleCollecion: !include habits.sample.json
-          exampleItem: !include habit.sample.json
+          exampleCollecion: !include sample/habits.json
+          exampleItem: !include sample/habit.json
             
       get:
         queryParameters: 
@@ -224,13 +224,13 @@ securedBy: []
       /{habitID}:
         type:
           collection-item:
-            exampleItem: !include habit.sample.json
+            exampleItem: !include sample/habit.json
               
     /tasks:
       type:
         collection:
-          exampleCollecion: !include tasks.sample.json
-          exampleItem: !include task.sample.json
+          exampleCollecion: !include sample/tasks.json
+          exampleItem: !include sample/task.json
       get:
         queryParameters: 
                 name:
@@ -260,6 +260,6 @@ securedBy: []
       /{taskID}:
         type:
           collection-item:
-            exampleItem: !include task.sample.json
+            exampleItem: !include sample/task.json
               
        
