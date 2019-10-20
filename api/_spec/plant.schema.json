@@ -1,0 +1,58 @@
+{
+  "definitions": {
+    "plant": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$id": "#/properties/id",
+          "type": "integer"
+        },
+        "name": {
+          "$id": "#/properties/name",
+          "type": "string",
+          "examples": [
+            "Sunflower"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "description": {
+          "$id": "#/properties/description",
+          "type": "string",
+          "examples": [
+            "Sunflowers follow the sun throughout the day!"
+          ],
+          "pattern": "^(.*)$"
+        }
+      }
+    }
+  },
+  "$id": "http://example.com/plant.json",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "description"
+  ],
+  "properties": {
+    "id": {
+      "$id": "#/properties/id",
+      "type": "integer"
+    },
+    "name": {
+      "$id": "#/properties/name",
+      "type": "string",
+      "examples": [
+        "Sunflower"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "description": {
+      "$id": "#/properties/description",
+      "type": "string",
+      "examples": [
+        "Sunflowers follow the sun throughout the day!"
+      ],
+      "pattern": "^(.*)$"
+    }
+  }
+}

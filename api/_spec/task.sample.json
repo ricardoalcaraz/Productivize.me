@@ -1,0 +1,11 @@
+{
+  "id": "1",
+  "reminders": [
+    "2019-01-01T07:30:00-05:00"
+  ],
+  "name": "Brush Teeth",
+  "description": "It's good for you.",
+  "completed": "false",
+  "timeRemaining": "00:02:30",
+  "subtasks": []
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "name": "BoJack",
+    "createdOn": "2019-01-01",
+    "lastActive": "2019-02-01"
+  },
+  {
+    "id": "2",
+    "name": "Cinna",
+    "createdOn": "2019-01-01",
+    "lastActive": "2019-02-02"
+  }
+]

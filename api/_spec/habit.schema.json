@@ -1,0 +1,122 @@
+{
+  "definitions": {
+    "habit": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$id": "#/properties/name",
+          "type": "string",
+          "examples": [
+            "Dental Hygiene"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "description": {
+          "$id": "#/properties/description",
+          "type": "string",
+          "examples": [
+            "It's good for ya!"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "startDate": {
+          "$id": "#/properties/startDate",
+          "type": "string",
+          "default": "2000-01-01T00:00:00+00:00",
+          "examples": [
+            "2008-09-15T15:53:00+05:00"
+          ],
+          "pattern": "/(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d\\.\\d+([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))/"
+        },
+        "endDate": {
+          "$id": "#/properties/endDate",
+          "type": "string",
+          "default": "2000-01-01T00:00:00+00:00",
+          "examples": [
+            "2008-09-15T15:53:00+05:00"
+          ],
+          "pattern": "/(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d\\.\\d+([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))/"
+        },
+        "frequency": {
+          "$id": "#/properties/frequency",
+          "type": "string",
+          "enum": [
+            "Daily",
+            "weekly",
+            "Monthly",
+            "Yearly"
+          ]
+        },
+        "tasks": {
+          "$id": "#/properties/tasks",
+          "type": "array",
+          "items": {
+            "$ref": "http://productivize.me/task.json#/task"
+          }
+        }
+      }
+    }
+  },
+  "$id": "http://productivize.me/habit.json",
+  "type": "object",
+  "required": [
+    "name",
+    "description",
+    "startDate",
+    "frequency",
+    "tasks"
+  ],
+  "properties": {
+    "name": {
+      "$id": "#/properties/name",
+      "type": "string",
+      "examples": [
+        "Dental Hygiene"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "description": {
+      "$id": "#/properties/description",
+      "type": "string",
+      "examples": [
+        "It's good for ya!"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "startDate": {
+      "$id": "#/properties/startDate",
+      "type": "string",
+      "default": "2000-01-01T00:00:00+00:00",
+      "examples": [
+        "2008-09-15T15:53:00+05:00"
+      ],
+      "pattern": "/(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d\\.\\d+([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))/"
+    },
+    "endDate": {
+      "$id": "#/properties/endDate",
+      "type": "string",
+      "default": "2000-01-01T00:00:00+00:00",
+      "examples": [
+        "2008-09-15T15:53:00+05:00"
+      ],
+      "pattern": "/(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d\\.\\d+([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d([+-][0-2]\\d:[0-5]\\d|Z))/"
+    },
+    "frequency": {
+      "$id": "#/properties/frequency",
+      "type": "string",
+      "enum": [
+        "Daily",
+        "weekly",
+        "Monthly",
+        "Yearly"
+      ]
+    },
+    "tasks": {
+      "$id": "#/properties/tasks",
+      "type": "array",
+      "items": {
+        "$ref": "http://productivize.me/task.json#/task"
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "$id": "http://productivize.me/user.json",
+  "type": "object",
+  "definitions": {
+    "user": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "examples": [
+            "BoJack"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "createdOn": {
+          "type": "string",
+          "examples": [
+            "2019-01-01"
+          ],
+          "pattern": "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))"
+        },
+        "lastActive": {
+          "type": "string",
+          "examples": [
+            "2019-02-01"
+          ],
+          "pattern": "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))"
+        }
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "createdOn",
+      "lastActive"
+    ],
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string",
+        "examples": [
+          "BoJack"
+        ],
+        "pattern": "^(.*)$"
+      },
+      "createdOn": {
+        "type": "string",
+        "examples": [
+          "2019-01-01"
+        ],
+        "pattern": "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))"
+      },
+      "lastActive": {
+        "type": "string",
+        "examples": [
+          "2019-02-01"
+        ],
+        "pattern": "([12]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01]))"
+      }
+    }
+  }
+}
