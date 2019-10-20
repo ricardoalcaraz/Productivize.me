@@ -11,7 +11,7 @@ const db = new repoCreator.HabitRepository(new Pool({
 console.log('----Habits Service----')
 server.start({
   port: port,
-  repo: db
+  db: db
 })
 
 console.log(`Server started succesfully, running on port: ${port}.`)
