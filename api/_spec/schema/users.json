@@ -1,0 +1,7 @@
+{
+  "$id": "http://example.com/users.json",
+  "type": "array",
+  "items": {
+    "$ref": "http://productivize.me/user.json#/user"
+  }
+}

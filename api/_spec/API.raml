@@ -1,0 +1,265 @@
+#%RAML 1.0
+title: Productivize API
+version: v0.4.20
+baseUri: https://productivize.me/api
+baseUriParameters: {}
+mediaType: application/json
+protocols: [ HTTP, HTTPS ]
+documentation:
+- title: Productivize API
+  content: 'TODO'
+securitySchemes:
+  auth:
+    type: TODO
+    describedBy:
+      queryParameters:
+        TODO:
+          required: TODO
+          displayName: TODO
+          description: TODO
+          type: TODO
+types: 
+  users: !include schema/users.json
+  user: !include schema/user.json
+  habits: !include schema/habits.json
+  habit: !include schema/habit.json
+  tasks: !include schema/tasks.json
+  task: !include schema/task.json
+  plants: !include schema/plants.json
+  plant: !include schema/plant.json
+  result: |
+    {
+      "definitions": {},
+      "$id": "http://example.com/result.json",
+      "type": "object",
+      "required": |
+        [
+          "message"
+        ],
+      "properties": |
+        {
+          "message": |
+            {
+              "$id": "#/properties/result",
+              "type": "string",
+              "examples": |
+                [
+                  "Invalid Date! Last Active date must be in the past."
+                ],
+              "pattern": "^(.*)$"
+            }
+        }
+    }
+resourceTypes:
+  collection:
+    description: Collection of available <<resourcePathName>>
+    get:
+      description: |
+        Get a list of <<resourcePathName>>
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<resourcePathName>>
+    patch:
+      description: |
+        Update an existing <<resourcePathName|!singularize>>
+      body:
+        application/json:
+          type: <<resourcePathName|!singularize>>
+      responses:
+        200:
+          body:
+            application/json:
+              type: result
+              example: |
+                {
+                  "message": "<<resourcePathName|!singularize>> has been updated!"
+                } 
+        404:
+          body:
+            application/json:
+              type: result
+              example: |
+                {
+                  "message": "<<resourcePathName|!singularize>> cannot be updated."
+                } 
+    post:
+      description: |
+        Add a new <<resourcePathName|!singularize>>
+      body:
+        application/json:
+          type: <<resourcePathName|!singularize>>
+      responses:
+        200:
+          body:
+            application/json:
+              type: result
+              example: |
+                {
+                  "message": "<<resourcePathName|!singularize>> has been created!"
+                } 
+        422:
+          body:
+            application/json:
+              type: result
+              example: |
+                {
+                  "message": "<<resourcePathName|!singularize>> cannot be created!"
+                } 
+    delete:
+      description: |
+        Delete a <<resourcePathName|!singularize>>
+      body:
+        application/json:
+          type: <<resourcePathName|!singularize>>
+      responses:
+        200:
+          body:
+            application/json:
+              type: result
+              example: |
+                {
+                  "message": "<<resourcePathName|!singularize>> has been deleted!"
+                } 
+        404:
+          body:
+            application/json:
+              type: error
+              example: |
+                {
+                  "message": "<<resourcePathName|!singularize>> cannot be deleted!"
+                }
+  collection-item:
+    get:
+      description:  |
+        Get the <<resourcePathName|!singularize>> with <<resourcePathName|!singularize>>Id = {<<resourcePathName|!singularize>>Id}
+      responses:
+        200:
+          body:
+            application/json: 
+              type: <<resourcePathName|!singularize>>
+        404:
+          body:
+            application/json:
+              type: result
+              example: |
+                {
+                  "message": "<<resourcePathName|!singularize>> not found"
+                } 
+traits:
+securedBy: []
+/plants:
+  type: 
+    collection:
+      exampleCollecion: !include sample/plants.json
+      exampleItem: !include sample/plant.json
+       
+  /{plantID}:
+    type:
+      collection-item:
+        exampleItem: !include sample/plant.json
+/users:
+  type: 
+    collection:
+      exampleCollecion: !include sample/users.json
+      exampleCollecion: !include sample/user.json
+        
+  get: 
+    queryParameters: 
+            lastActive:
+              displayName: Last Active
+              type: date
+              description: The last recorded date of activity in the format of yyyy-mm-dd
+              example: 2019-01-01
+              required: false
+            createdOn:
+              displayName: Created On
+              type: date
+              description: The date the account was created on in the format of yyyy-mm-dd
+              example: 2019-01-01
+              required: false
+            name:
+              displayName: Name
+              type: string
+              description: The name associated with the account.
+              example: BoJack Horseman
+              required: false
+  /{userID}:
+    type:
+      collection-item:
+        exampleItem: !include sample/user.json
+    /habits:
+      type:
+        collection:
+          exampleCollecion: !include sample/habits.json
+          exampleItem: !include sample/habit.json
+            
+      get:
+        queryParameters: 
+                name:
+                  displayName: Name
+                  type: string
+                  description: The name associated with the habit.
+                  example: Dental Hygiene
+                  required: false
+                startDate:
+                  displayName: Start Date
+                  type: datetime
+                  description: The starting date and time for the habit in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
+                  example: 2008-09-15T15:53:00+05:00
+                  required: false
+                endDate:
+                  displayName: End Date
+                  type: datetime
+                  description: The ending date and time for the habit in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
+                  example: 2008-09-15T15:53:00+05:00
+                  required: false
+                frequency:
+                  displayName: Frequency
+                  type: frequency
+                  description: The frequency at which the habit will reoccur.
+                  example: Weekly
+                  required: false
+      /{habitID}:
+        type:
+          collection-item:
+            exampleItem: !include sample/habit.json
+              
+    /tasks:
+      type:
+        collection:
+          exampleCollecion: !include sample/tasks.json
+          exampleItem: !include sample/task.json
+      get:
+        queryParameters: 
+                name:
+                  displayName: Name
+                  type: string
+                  description: The name associated with the Task.
+                  example: Brush Teeth
+                  required: false
+                completed:
+                  displayName: Completed
+                  type: boolean
+                  description: The completion status of the Task
+                  example: true
+                  required: false
+                timeRemaining:
+                  displayName: Time Remaining
+                  type: time
+                  description: The total time remaining on the Task.
+                  example: 15:53:00
+                  required: false
+                deadline:
+                  displayName: deadline
+                  type: datetime
+                  description: The datetime deadline for the task in the format of yyyy-mm-ddThh:mm:ss.nnnnnn+|-hh:mm.
+                  example: 2008-09-15T15:53:00+05:00
+                  required: false
+      /{taskID}:
+        type:
+          collection-item:
+            exampleItem: !include sample/task.json
+              
+       

@@ -1,0 +1,86 @@
+{
+  "definitions": {
+    "task": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "examples": [
+            "Brush Teeth"
+          ],
+          "pattern": "^(.*)$"
+        },
+        "completed": {
+          "type": "boolean"
+        },
+        "timeRemaining": {
+          "type": "string",
+          "examples": [
+            "00:01:28"
+          ],
+          "pattern": "^([01]?\\d|2[0-3]):([0-5]\\d):([0-5]\\d)$"
+        },
+        "reminders": {
+          "type": "array",
+          "items": {
+            "$id": "#/properties/reminders/items",
+            "type": "string",
+            "examples": [
+              "2008-09-15T15:53:00+05:00"
+            ],
+            "pattern": "/(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d\\.\\d+)|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d)|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d)/"
+          }
+        },
+        "subtasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/task"
+          }
+        }
+      }
+    }
+  },
+  "$id": "http://productivize.me/task.json",
+  "type": "object",
+  "required": [
+    "name",
+    "completed",
+    "timeRemaining"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "examples": [
+        "Brush Teeth"
+      ],
+      "pattern": "^(.*)$"
+    },
+    "completed": {
+      "type": "boolean"
+    },
+    "timeRemaining": {
+      "type": "string",
+      "examples": [
+        "00:01:28"
+      ],
+      "pattern": "^([01]?\\d|2[0-3]):([0-5]\\d):([0-5]\\d)$"
+    },
+    "reminders": {
+      "type": "array",
+      "items": {
+        "$id": "#/properties/reminders/items",
+        "type": "string",
+        "examples": [
+          "2008-09-15T15:53:00+05:00"
+        ],
+        "pattern": "/(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d\\.\\d+)|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d:[0-5]\\d)|(\\d{4}-[01]\\d-[0-3]\\dT[0-2]\\d:[0-5]\\d)/"
+      }
+    },
+    "subtasks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/task"
+      }
+    }
+  }
+}
