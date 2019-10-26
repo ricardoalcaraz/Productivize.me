@@ -12,9 +12,7 @@ CREATE TABLE task (
 	name VARCHAR(20) NOT NULL,
 	description VARCHAR(50) NOT NULL,
 	completed BIT NOT NULL,
-	time_required VARCHAR(20) NULL,
-	subtask_ID INT NULL,
-	FOREIGN KEY(subtask_ID) REFERENCES task(identifier)
+	time_required VARCHAR(20) NULL
 );
 
 
@@ -30,7 +28,7 @@ CREATE TABLE plant (
 );
 
 CREATE TABLE garden (
-	user_id int,
+	user_id VARCHAR(50),
 	plant_id int,
 	level int,
 	CONSTRAINT garden_pk PRIMARY KEY(user_id, plant_id)
@@ -67,3 +65,9 @@ CREATE TABLE completed_task (
 	user_ID VARCHAR(50) NOT NULL,
 	FOREIGN KEY(user_id) REFERENCES profile(identifier)
 );
+
+CREATE TABLE subtask (
+	parent_taskID INT NOT NULL,
+	child_taskID INT NOT NULL,
+	CONSTRAINT subtask_pk PRIMARY KEY(parent_taskID, child_taskID)
+)
