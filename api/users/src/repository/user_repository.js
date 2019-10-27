@@ -10,10 +10,14 @@ class UserRepository {
   }
 
   async Query () {
-    this.pool.query('SELECT NOW()', (e, r) => {
+    const client = await this.pool.connect()
+    try {
+      return await client.query('SELECT NOW()')
+    } finally {
       console.log('Successfully queried the user database!')
-    })
+      client.release()
+    }
   }
-};
+}
 
 module.exports = UserRepository
