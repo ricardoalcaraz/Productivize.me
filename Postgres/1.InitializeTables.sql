@@ -11,7 +11,7 @@ CREATE TABLE task (
 	date TIMESTAMP NULL,
 	name VARCHAR(20) NOT NULL,
 	description VARCHAR(50) NOT NULL,
-	completed BIT NOT NULL,
+	completed BOOLEAN NOT NULL,
 	time_required VARCHAR(20) NULL
 );
 
@@ -24,7 +24,7 @@ CREATE TABLE frequency (
 CREATE TABLE plant (
 	identifier int PRIMARY KEY,
 	name VARCHAR(20) NOT NULL,
-	description VARCHAR(20) NULL
+	description VARCHAR(200) NULL
 );
 
 CREATE TABLE garden (
@@ -70,4 +70,4 @@ CREATE TABLE subtask (
 	parent_taskID INT NOT NULL,
 	child_taskID INT NOT NULL,
 	CONSTRAINT subtask_pk PRIMARY KEY(parent_taskID, child_taskID)
-)
+);

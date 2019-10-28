@@ -1,5 +1,5 @@
 const { Pool } = require('pg')
-const server = require('./server/server')
+const server = require('./server/server.js')
 const cache = require('./cache/cache.js')
 const auth = require('./auth/auth.js')
 const UserRepository = require('./repository/user_repository.js')
