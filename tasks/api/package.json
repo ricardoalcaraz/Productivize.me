@@ -11,13 +11,18 @@
   "author": "5th Coalition",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cognito-express": "^2.0.16",
     "express": "^4.17.1",
-    "express-session": "^1.16.2",
+    "knex": "^0.20.1",
     "pg": "^7.12.1",
     "underscore": "^1.9.1"
   },
   "devDependencies": {
-    "nodemon": "^1.17.3"
+    "chai": "^4.2.0",
+    "mocha": "^6.2.1",
+    "nodemon": "^1.17.3",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
   }
 }
