@@ -1,15 +1,15 @@
 version: "3.7"
 services:
-  authentication_microservice:
-    image: authentication
-    build: 
-      context: api/authentication/
-  habits_microservice:
+  habits_api:
     container_name: habits
     image: habits
     build:
-      context: api/habits/
-  users_microservice:
+      context: habits/api/
+  users_api:
     image: users
     build:
-      context: api/users/
+      context: users/api/
+  tasks_api:
+    image: tasks
+    build: 
+      context: tasks/api/
