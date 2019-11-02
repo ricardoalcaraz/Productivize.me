@@ -6,22 +6,43 @@ services:
     networks:
       - backend
     command: redis-server
-  authentication_microservice:
-    container_name: authentication
-    image: authentication
+  tasks_api:
+    container_name: tasks_api
+    image: tasks_api
     volumes:
       - logs:${LOG_PATH}
+    depends_on:
+      - tasks_db
     networks:
       - frontend
       - backend
-    depends_on: 
-      - cache
     environment:
-      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID}
-      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
-      - CACHE_URL=${CACHE_URL}
-      - LOG_PATH=${LOG_PATH}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_POOL_ID=${AWS_POOL_ID}
+      - DB_NETWORK=${DB_NETWORK}
+      - DB_HOST=${TASK_DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
       - PORT=3003
+  tasks_db:
+      container_name: tasks_db
+      image: tasks_db
+      volumes:
+        - task-db-data:/var/lib/postgresql/tasks/data
+      networks:
+        - backend
+      environment:
+        - PG_MODE=${DB_MODE}
+        - PG_PRIMARY_USER=${DB_USER}
+        - PG_PRIMARY_PASSWORD=${DB_PASSWORD}
+        - PG_DATABASE=${DB_NAME}
+        - PG_USER=${DB_ADMIN}
+        - PG_PASSWORD=${DB_PASSWORD}
+        - PG_ROOT_PASSWORD=${DB_PASSWORD}
+      build: 
+          context: tasks/db/
   habits_microservice:
     container_name: habits
     image: habits
@@ -61,13 +82,13 @@ services:
       networks:
         - backend
       environment:
-        - PG_MODE=${PG_MODE}
-        - PG_PRIMARY_USER=${PG_PRIMARY_USER}
-        - PG_PRIMARY_PASSWORD=${PG_PRIMARY_PASSWORD}
-        - PG_DATABASE=${PG_DATABASE}
-        - PG_USER=${PG_USER}
-        - PG_PASSWORD=${PG_PASSWORD}
-        - PG_ROOT_PASSWORD=${PG_ROOT_PASSWORD}
+        - PG_MODE=${DB_MODE}
+        - PG_PRIMARY_USER=${DB_USER}
+        - PG_PRIMARY_PASSWORD=${DB_PASSWORD}
+        - PG_DATABASE=${DB_NAME}
+        - PG_USER=${DB_ADMIN}
+        - PG_PASSWORD=${DB_PASSWORD}
+        - PG_ROOT_PASSWORD=${DB_PASSWORD}
       build: 
           context: Postgres/
   db-admin:
@@ -95,6 +116,7 @@ services:
       depends_on:
         - habits_microservice
         - users_microservice
+        - tasks_api
 
 networks:
     backend:
@@ -103,6 +125,7 @@ networks:
         driver: bridge
     
 volumes:
+    task-db-data:
     db-data:
     db-admin:
     redis-cache:

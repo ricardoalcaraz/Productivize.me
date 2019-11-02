@@ -1,10 +1,10 @@
 version: "3.7"
 services:
-  authentication_microservice:
+  tasks_api:
     image: node:12-alpine
     working_dir: /app
     volumes:
-      - ./api/authentication:/app
+      - ./tasks/api:/app
     ports:
       - "9231:9229"
     command: sh -c "npm install && npm run dev"

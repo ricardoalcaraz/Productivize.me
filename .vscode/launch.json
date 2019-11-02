@@ -1,42 +1,41 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-
-        {
-            "name": "Users Debugger",
-            "type": "node",
-            "request": "attach",
-            "port": 9230,
-            "address": "localhost",
-            "localRoot": "${workspaceFolder}/api/users",
-            "remoteRoot": "/app",
-            "protocol": "inspector",
-            "restart": true
-        },
-        {
-            "name": "Habits Debugger",
-            "type": "node",
-            "request": "attach",
-            "port": 9229,
-            "address": "localhost",
-            "localRoot": "${workspaceFolder}/api/habits",
-            "remoteRoot": "/app",
-            "protocol": "inspector",
-            "restart": true
-        },
-        {
-            "name": "Authentication Debugger",
-            "type": "node",
-            "request": "attach",
-            "port": 9231,
-            "address": "localhost",
-            "localRoot": "${workspaceFolder}/api/authentication",
-            "remoteRoot": "/app",
-            "protocol": "inspector",
-            "restart": true
-        },
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Users Debugger",
+      "type": "node",
+      "request": "attach",
+      "port": 9230,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/api/users",
+      "remoteRoot": "/app",
+      "protocol": "inspector",
+      "restart": true
+    },
+    {
+      "name": "Habits Debugger",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/api/habits",
+      "remoteRoot": "/app",
+      "protocol": "inspector",
+      "restart": true
+    },
+    {
+      "name": "Tasks Debugger",
+      "type": "node",
+      "request": "attach",
+      "port": 9231,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/tasks/api",
+      "remoteRoot": "/app",
+      "protocol": "inspector",
+      "restart": true
+    },
+  ]
 }

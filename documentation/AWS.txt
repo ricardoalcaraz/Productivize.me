@@ -1,0 +1,49 @@
+HELPFUL COMMANDS:
+
+First time user pls install aws command line tools: 
+https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html
+
+use AWS CONFIGURE and use secret keys and id's from the .env folder.
+
+then use command:
+`aws cognito-idp sign-up --region <region> --client-id <clientid> --username <name> --password <password> --user-attributes Name=email,Value=<dev_email>`
+to make an admin user.
+
+make the aws power folder:
+with auth.json file inside with details:
+```.json
+{
+  "UserPoolId": "<AWS_POOL_ID>",
+  "ClientId": "<AWS_CLIENT_ID>",
+  "AuthFlow": "ADMIN_NO_SRP_AUTH",
+  "AuthParameters": {
+    "USERNAME": "<username>",
+    "PASSWORD": "<password>"
+  }
+}
+```
+
+you can now use
+`aws cognito-idp admin-initiate-auth --region us-west-2 --cli-input-json file://auth.json`
+from the .aws power folder.
+- I also like to append `> response.json` to get results in a file.
+
+this should result in the access tokens, refresh, and id tokens being granted to you.
+
+i had to make sure app clients are configured to accept the API sign-in mode.
+
+
+you can create an additional refresh.json file for refreshing by using the tokens you got earlier:
+```
+{
+  "UserPoolId": "<AWS_POOL_ID>",
+  "ClientId": "<AWS_CLIENT_ID>",
+  "AuthFlow": "REFRESH_TOKEN_AUTH",
+  "AuthParameters": {
+    "REFRESH_TOKEN": "<REFRESH_TOKEN>"
+}
+```
+
+and use `aws cognito-idp admin-initiate-auth --region us-west-2 --cli-input-json file://refresh.json` to update your access token.
+
+TODO: this should be simplified somehow.
