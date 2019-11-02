@@ -1,46 +1,5 @@
 version: "3.7"
 services:
-  cache:
-    image: redis:buster
-    container_name: cache
-    networks:
-      - backend
-    command: redis-server
-  tasks_api:
-    container_name: tasks_api
-    image: tasks_api
-    depends_on:
-      - tasks_db
-    networks:
-      - frontend
-      - backend
-    environment:
-      - AWS_REGION=${AWS_REGION}
-      - AWS_POOL_ID=${AWS_POOL_ID}
-      - DB_NETWORK=${DB_NETWORK}
-      - DB_HOST=${TASK_DB_HOST}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME}
-      - DB_PORT=${DB_PORT}
-      - PORT=3003
-  tasks_db:
-      container_name: tasks_db
-      image: tasks_db
-      volumes:
-        - tasks-db-data:/var/lib/postgresql/data
-      networks:
-        - backend
-      environment:
-        - PG_MODE=${DB_MODE}
-        - PG_PRIMARY_USER=${DB_USER}
-        - PG_PRIMARY_PASSWORD=${DB_PASSWORD}
-        - PG_DATABASE=${DB_NAME}
-        - PG_USER=${DB_ADMIN}
-        - PG_PASSWORD=${DB_PASSWORD}
-        - PG_ROOT_PASSWORD=${DB_PASSWORD}
-      build: 
-          context: tasks/db/
   habits_api:
     container_name: habits_api
     image: habits_api
@@ -76,27 +35,64 @@ services:
       - PG_ROOT_PASSWORD=${DB_PASSWORD}
     build: 
         context: habits/db/
-  users_microservice:
-    container_name: users
-    image: users
-    volumes:
-      - logs:/logs
+  users_api:
+    container_name: users_api
+    image: users_api
     networks:
       - frontend
       - backend
     depends_on:
-      - db
-      - cache
+      - users_db
     environment:
-      - CACHE_URL=${CACHE_URL}
-      - DATABASE_URL=${DATABASE_URL}
-      - LOG_PATH=${LOG_PATH}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_POOL_ID=${AWS_POOL_ID}
+      - DB_NETWORK=${DB_NETWORK}
+      - DB_HOST=${USER_DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
       - PORT=3002
-  db:
-      container_name: postgres
-      image: postgres
+  users_db:
+    container_name: users_db
+    image: users_db
+    volumes:
+      - users-db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    environment:
+      - PG_MODE=${DB_MODE}
+      - PG_PRIMARY_USER=${DB_USER}
+      - PG_PRIMARY_PASSWORD=${DB_PASSWORD}
+      - PG_DATABASE=${DB_NAME}
+      - PG_USER=${DB_ADMIN}
+      - PG_PASSWORD=${DB_PASSWORD}
+      - PG_ROOT_PASSWORD=${DB_PASSWORD}
+    build: 
+        context: users/db/
+  tasks_api:
+    container_name: tasks_api
+    image: tasks_api
+    depends_on:
+      - tasks_db
+    networks:
+      - frontend
+      - backend
+    environment:
+      - AWS_REGION=${AWS_REGION}
+      - AWS_POOL_ID=${AWS_POOL_ID}
+      - DB_NETWORK=${DB_NETWORK}
+      - DB_HOST=${TASK_DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
+      - PORT=3003
+  tasks_db:
+      container_name: tasks_db
+      image: tasks_db
       volumes:
-        - db-data:/var/lib/postgresql/data
+        - tasks-db-data:/var/lib/postgresql/data
       networks:
         - backend
       environment:
@@ -108,7 +104,7 @@ services:
         - PG_PASSWORD=${DB_PASSWORD}
         - PG_ROOT_PASSWORD=${DB_PASSWORD}
       build: 
-          context: Postgres/
+          context: tasks/db/
   db-admin:
       container_name: pgadmin
       image: dpage/pgadmin4
@@ -133,19 +129,15 @@ services:
           dockerfile: nginx/DOCKERFILE
       depends_on:
         - habits_api
-        - users_microservice
+        - users_api
         - tasks_api
-
 networks:
     backend:
         driver: bridge
     frontend:
         driver: bridge
-    
 volumes:
     habits-db-data:
     tasks-db-data:
-    db-data:
+    users-db-data:
     db-admin:
-    redis-cache:
-    logs:

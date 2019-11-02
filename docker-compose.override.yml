@@ -1,13 +1,5 @@
 version: "3.7"
 services:
-  tasks_api:
-    image: node:12-alpine
-    working_dir: /app
-    volumes:
-      - ./tasks/api:/app
-    ports:
-      - "9231:9229"
-    command: sh -c "npm install && npm run dev"
   habits_api:
     image: node:12-alpine
     working_dir: /app
@@ -16,11 +8,19 @@ services:
     ports:
       - "9229:9229"
     command: sh -c "npm install && npm run dev"
-  users_microservice:
+  users_api:
     image: node:12-alpine
     working_dir: /app
     volumes:
-      - ./api/users:/app
+      - ./users/api:/app
     ports:
       - "9230:9229"
+    command: sh -c "npm install && npm run dev"
+  tasks_api:
+    image: node:12-alpine
+    working_dir: /app
+    volumes:
+      - ./tasks/api:/app
+    ports:
+      - "9231:9229"
     command: sh -c "npm install && npm run dev"

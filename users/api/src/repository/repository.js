@@ -1,6 +1,12 @@
-class UserRepository {
+class Repository {
   constructor (knex) {
     this.knex = knex
+  }
+
+  async ping () {
+    console.log('Pinging the database')
+    const response = await this.knex.raw('SELECT NOW()')
+    return response
   }
 
   async GetUsers (params) {
@@ -66,4 +72,4 @@ class UserRepository {
   }
 }
 
-module.exports = UserRepository
+module.exports = Repository
