@@ -9,8 +9,6 @@ services:
   tasks_api:
     container_name: tasks_api
     image: tasks_api
-    volumes:
-      - logs:${LOG_PATH}
     depends_on:
       - tasks_db
     networks:
@@ -30,7 +28,7 @@ services:
       container_name: tasks_db
       image: tasks_db
       volumes:
-        - task-db-data:/var/lib/postgresql/tasks/data
+        - tasks-db-data:/var/lib/postgresql/data
       networks:
         - backend
       environment:
@@ -43,21 +41,41 @@ services:
         - PG_ROOT_PASSWORD=${DB_PASSWORD}
       build: 
           context: tasks/db/
-  habits_microservice:
-    container_name: habits
-    image: habits
-    volumes:
-      - logs:${LOG_PATH}
+  habits_api:
+    container_name: habits_api
+    image: habits_api
     networks:
       - frontend
       - backend
     depends_on:
-      - db
-      - cache
+      - habits_db
     environment:
-      - CACHE_URL=${CACHE_URL}
-      - DATABASE_URL=${DATABASE_URL}
+      - AWS_REGION=${AWS_REGION}
+      - AWS_POOL_ID=${AWS_POOL_ID}
+      - DB_NETWORK=${DB_NETWORK}
+      - DB_HOST=${HABIT_DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=${DB_PORT}
       - PORT=3001
+  habits_db:
+    container_name: habits_db
+    image: habits_db
+    volumes:
+      - habits-db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+    environment:
+      - PG_MODE=${DB_MODE}
+      - PG_PRIMARY_USER=${DB_USER}
+      - PG_PRIMARY_PASSWORD=${DB_PASSWORD}
+      - PG_DATABASE=${DB_NAME}
+      - PG_USER=${DB_ADMIN}
+      - PG_PASSWORD=${DB_PASSWORD}
+      - PG_ROOT_PASSWORD=${DB_PASSWORD}
+    build: 
+        context: habits/db/
   users_microservice:
     container_name: users
     image: users
@@ -114,7 +132,7 @@ services:
           context: .
           dockerfile: nginx/DOCKERFILE
       depends_on:
-        - habits_microservice
+        - habits_api
         - users_microservice
         - tasks_api
 
@@ -125,7 +143,8 @@ networks:
         driver: bridge
     
 volumes:
-    task-db-data:
+    habits-db-data:
+    tasks-db-data:
     db-data:
     db-admin:
     redis-cache:

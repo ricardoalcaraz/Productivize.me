@@ -24,26 +24,15 @@ async function getAll (req, res) {
   }
 }
 
-async function insert (req, res) {
-  try {
-    const db = this.db
-    const response = await db.create()
-    res.json({ success: true, db: response })
-  } catch (e) {
-    res.status(500).send(e.stack)
-  }
-}
-
 module.exports = ({ app, db }) => {
   app.get('/test/', (req, res) => { res.json({ ok: 'ok' }) })
-
   app.get('/ping/:parameter', _.bind(ping, { db }))
 
   app.get('/', _.bind(getAll, { db }))
 
   app.get('/:id', unimplemented)
 
-  app.post('/new', _.bind(insert, { db }))
+  app.post('/new', unimplemented)
 
   app.put('/edit', unimplemented)
 

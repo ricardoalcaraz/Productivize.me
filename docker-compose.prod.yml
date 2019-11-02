@@ -4,11 +4,11 @@ services:
     image: tasks
     build: 
       context: tasks/api/
-  habits_microservice:
+  habits_api:
     container_name: habits
     image: habits
     build:
-      context: api/habits/
+      context: habits/api/
   users_microservice:
     image: users
     build:
