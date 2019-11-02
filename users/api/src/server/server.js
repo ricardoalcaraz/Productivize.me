@@ -22,7 +22,7 @@ const start = async ({ settings, db }) => {
     app.use(bodyParser.json())
 
     /* AUTHENTICATION */
-    app.use('/tasks/', route)
+    app.use('/users/', route)
     secure({ app: route })
 
     /* API */

@@ -15,39 +15,36 @@ async function ping (req, res) {
   }
 }
 
-async function getAll (req, res) {
-  try {
-    const response = await this.db.getAll()
-    res.json({ success: true, db: response })
-  } catch (e) {
-    res.status(500).send(e.stack)
-  }
-}
-
-async function insert (req, res) {
-  try {
-    const db = this.db
-    const response = await db.create()
-    res.json({ success: true, db: response })
-  } catch (e) {
-    res.status(500).send(e.stack)
-  }
-}
-
 module.exports = ({ app, db }) => {
   app.get('/test/', (req, res) => { res.json({ ok: 'ok' }) })
 
   app.get('/ping/:parameter', _.bind(ping, { db }))
 
-  app.get('/', _.bind(getAll, { db }))
+  app.get('/', async (req, res) => {
+    const users = await db.GetUsers(req.query)
+    res.json(users)
+  })
 
   app.get('/:id', unimplemented)
 
-  app.post('/new', _.bind(insert, { db }))
+  app.post('/new', unimplemented)
 
   app.put('/edit', unimplemented)
 
   app.post('/delete', unimplemented)
 
-  app.post('/share', unimplemented)
+  app.get('/:name', async (req, res) => {
+    const user = await db.GetUser(req.params)
+    res.json(user)
+  })
+
+  app.get('/:name/habits', async (req, res) => {
+    const habits = await db.GetUserHabits(req.params)
+    res.json(habits)
+  })
+
+  app.get('/:name/:habitID', async (req, res) => {
+    const habits = await db.GetUserHabits(req.params)
+    res.json(habits)
+  })
 }

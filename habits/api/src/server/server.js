@@ -1,5 +1,5 @@
-const express = require('express')
 const bodyParser = require('body-parser')
+const express = require('express')
 const api = require('../api/api.js')
 const { secure } = require('../security/security.js')
 
@@ -22,7 +22,7 @@ const start = async ({ settings, db }) => {
     app.use(bodyParser.json())
 
     /* AUTHENTICATION */
-    app.use('/tasks/', route)
+    app.use('/habits/', route)
     secure({ app: route })
 
     /* API */

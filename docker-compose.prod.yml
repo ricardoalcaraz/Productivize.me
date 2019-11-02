@@ -1,15 +1,15 @@
 version: "3.7"
 services:
+  habits_api:
+    container_name: habits
+    image: habits
+    build:
+      context: habits/api/
+  users_api:
+    image: users
+    build:
+      context: users/api/
   tasks_api:
     image: tasks
     build: 
       context: tasks/api/
-  habits_microservice:
-    container_name: habits
-    image: habits
-    build:
-      context: api/habits/
-  users_microservice:
-    image: users
-    build:
-      context: api/users/
