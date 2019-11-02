@@ -1,28 +1,9 @@
-$( document ).ready(function() {
-    console.log( "ready!" );
-    $("#submitButton").on('click', submitClick);
-    $("#apiTest").on('click', hitTestEndpoint);
-});
+/**
+ * @format
+ */
 
-function submitClick(){
-    console.log("Button clicked");
-    $("#nice").text("Nice");
-}
+import {AppRegistry} from 'react-native';
+import App from './App';
+import {name as appName} from './app.json';
 
-function hitTestEndpoint(){
-    console.log('Hit test endpoint button');
-    $.ajax({
-        type: 'GET',
-        url: '/api/test',
-        beforeSend: function(request) {
-            request.setRequestHeader("Access-Control-Allow-Origin", "*");
-        },
-        success: function(data){
-            console.log('Received something');
-            $("#nice").text(data);
-        },
-        error: function(data){
-            console.log(data)
-        }
-    });
-}
+AppRegistry.registerComponent(appName, () => App);
