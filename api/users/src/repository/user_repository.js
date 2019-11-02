@@ -1,59 +1,22 @@
-class SqlPreparer {
-  constructor (baseQuery) {
-    this.baseQuery = baseQuery.trim()
-    this.parameters = []
-    this.index = 0
-  }
-
-  And (columnName, parameter) {
-    this.AddOperator('AND')
-    this.baseQuery += `${columnName} = $${++this.index}`
-    this.parameters.push(parameter)
-  }
-
-  Or (columnName, parameter) {
-    this.AddOperator('OR')
-    this.baseQuery += `${columnName} = $${++this.index}`
-    this.parameters.push(parameter)
-  }
-
-  Query () {
-    return `${this.baseQuery}`
-  }
-
-  Parameter () {
-    return this.parameters
-  }
-
-  AddOperator (operator) {
-    if (this.index === 0) {
-      this.baseQuery += ' WHERE '
-    } else {
-      this.baseQuery += ` ${operator} `
-    }
-  }
-}
-
 class UserRepository {
-  constructor (pool) {
-    this.pool = pool
+  constructor (knex) {
+    this.knex = knex
   }
 
   async GetUsers (params) {
     let response = []
     try {
-      const sqlQuery = 'SELECT identifier as id, created_on as createdOn, last_login as lastLogin FROM profile'
-      const sqlStatement = new SqlPreparer(sqlQuery, 'profile')
+      const userQueryBuilder = this.knex.select().from('profile')
       if (params.name) {
-        sqlStatement.And('identifier', params.name)
+        userQueryBuilder.where('identifier', params.name)
       }
       if (params.createdOn) {
-        sqlStatement.And('created_on', params.createdOn)
+        userQueryBuilder.where('created_on', params.createdOn)
       }
       if (params.lastActive) {
-        sqlStatement.And('last_login', params.lastActive)
+        userQueryBuilder.where('last_login', params.lastActive)
       }
-      response = await this.pool.query(sqlStatement.Query(), sqlStatement.Parameter())
+      response = await userQueryBuilder
     } catch (e) {
       console.log(e)
     }
@@ -69,8 +32,7 @@ class UserRepository {
   async GetUser (params) {
     let response = []
     try {
-      const sqlQuery = 'SELECT identifier as id, created_on as createdOn, last_login as lastLogin FROM profile WHERE identifier = $1'
-      response = await this.pool.query(sqlQuery, [params.name])
+      response = await this.knex.select().from('profile').where('identifier', params.name)
     } catch (e) {
       console.log(e)
     }
@@ -80,24 +42,23 @@ class UserRepository {
   async GetUserHabits (params) {
     let response = []
     try {
-      const sqlQuery = 'SELECT h.identifier as id, description, created_on, start_date, end_date, frequency_description FROM habit h INNER JOIN frequency f ON h.frequency_id = f.identifier'
-      const sqlStatement = new SqlPreparer(sqlQuery, 'profile')
+      const habitQueryBuilder = this.knex.from('habit').innerJoin('frequency', 'habit.frequency_id', 'frequency.identifier')
       if (params.name) {
-        sqlStatement.And('user_id', params.name)
+        habitQueryBuilder.where('user_id', params.name)
       }
       if (params.startDate) {
-        sqlStatement.And('start_date', params.startDate)
+        habitQueryBuilder.where('start_date', params.startDate)
       }
       if (params.endDate) {
-        sqlStatement.And('end_date', params.endDate)
+        habitQueryBuilder.where('end_date', params.endDate)
       }
       if (params.frequency) {
-        sqlStatement.And('frequency', params.frequency)
+        habitQueryBuilder.where('frequency', params.frequency)
       }
       if (params.habitID) {
-        sqlStatement.And('h.identifier', params.habitID)
+        habitQueryBuilder.where('h.identifier', params.habitID)
       }
-      response = await this.pool.query(sqlStatement.Query(), sqlStatement.Parameter())
+      response = await habitQueryBuilder
     } catch (e) {
       console.log(e)
     }

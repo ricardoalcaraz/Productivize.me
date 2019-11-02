@@ -1,13 +1,13 @@
-const { Pool } = require('pg')
 const server = require('./server/server.js')
 const cache = require('./cache/cache.js')
 const auth = require('./auth/auth.js')
 const UserRepository = require('./repository/user_repository.js')
-
+const knex = require('knex')({
+  client: 'pg',
+  connection: process.env.DATABASE_URL
+})
 const port = process.env.PORT
-const db = new UserRepository(new Pool({
-  connectionString: process.env.DATABASE_URL
-}))
+const db = new UserRepository(knex)
 
 server.start({
   port,
