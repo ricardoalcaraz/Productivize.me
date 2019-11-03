@@ -92,7 +92,7 @@ services:
         - frontend
       build:
           context: .
-          dockerfile: nginx/Dockerfile
+          dockerfile: nginx/DOCKERFILE
       depends_on:
         - habits_api
         - users_api
