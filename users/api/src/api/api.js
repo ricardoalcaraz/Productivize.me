@@ -1,10 +1,17 @@
 const _ = require('underscore')
 const { unimplemented } = require('productivize-tools').decorators.express
 
-async function ping (req, res) {
+async function ping(req, res) {
   try {
     const now = await this.db.ping()
-    res.json({ success: true, params: req.params, query: req.query, body: req.body, user: res.locals.user, db: now.rows })
+    res.json({
+      success: true,
+      params: req.params,
+      query: req.query,
+      body: req.body,
+      user: res.locals.user,
+      db: now.rows
+    })
   } catch (e) {
     res.status(500).send(e.stack)
   }
