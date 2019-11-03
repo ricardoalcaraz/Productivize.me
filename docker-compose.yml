@@ -11,8 +11,13 @@ services:
     environment:
       - AWS_REGION=${AWS_REGION}
       - AWS_POOL_ID=${AWS_POOL_ID}
+      - DB_NETWORK=${DB_NETWORK}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${HABIT_DB_NAME}
+      - DB_PORT=${DB_PORT}
       - PORT=3001
-      - DB_NAME=habit
   users_api:
     container_name: users_api
     image: users_api
@@ -24,8 +29,13 @@ services:
     environment:
       - AWS_REGION=${AWS_REGION}
       - AWS_POOL_ID=${AWS_POOL_ID}
+      - DB_NETWORK=${DB_NETWORK}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${USER_DB_NAME}
+      - DB_PORT=${DB_PORT}
       - PORT=3002
-      - DB_NAME=profile
   tasks_api:
     container_name: tasks_api
     image: tasks_api
@@ -37,8 +47,13 @@ services:
     environment:
       - AWS_REGION=${AWS_REGION}
       - AWS_POOL_ID=${AWS_POOL_ID}
+      - DB_NETWORK=${DB_NETWORK}
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${TASK_DB_NAME}
+      - DB_PORT=${DB_PORT}
       - PORT=3003
-      - DB_NAME=task
   db:
     container_name: postgres
     image: postgres
@@ -50,12 +65,12 @@ services:
       - PG_MODE=${DB_MODE}
       - PG_PRIMARY_USER=${DB_USER}
       - PG_PRIMARY_PASSWORD=${DB_PASSWORD}
-      - PG_DATABASE=${DB_NAME}
+      - PG_DATABASE=${DB_USER}
       - PG_USER=${DB_USER}
       - PG_PASSWORD=${DB_PASSWORD}
       - PG_ROOT_PASSWORD=${DB_PASSWORD}
     build: 
-        context: Postgres/
+        context: database/
   db-admin:
       container_name: pgadmin
       image: dpage/pgadmin4
@@ -76,7 +91,8 @@ services:
       networks: 
         - frontend
       build:
-          context: ./nginx
+          context: .
+          dockerfile: nginx/Dockerfile
       depends_on:
         - habits_api
         - users_api

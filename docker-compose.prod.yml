@@ -4,12 +4,12 @@ services:
     container_name: habits
     image: habits
     build:
-      context: habits/api/
+      context: habits/
   users_api:
     image: users
     build:
-      context: users/api/
+      context: users/
   tasks_api:
     image: tasks
     build: 
-      context: tasks/api/
+      context: tasks/

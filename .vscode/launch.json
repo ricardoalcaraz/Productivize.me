@@ -10,7 +10,7 @@
       "request": "attach",
       "port": 9230,
       "address": "localhost",
-      "localRoot": "${workspaceFolder}/api/users",
+      "localRoot": "${workspaceFolder}/users",
       "remoteRoot": "/app",
       "protocol": "inspector",
       "restart": true
@@ -21,7 +21,7 @@
       "request": "attach",
       "port": 9229,
       "address": "localhost",
-      "localRoot": "${workspaceFolder}/api/habits",
+      "localRoot": "${workspaceFolder}/habits",
       "remoteRoot": "/app",
       "protocol": "inspector",
       "restart": true
@@ -32,7 +32,7 @@
       "request": "attach",
       "port": 9231,
       "address": "localhost",
-      "localRoot": "${workspaceFolder}/tasks/api",
+      "localRoot": "${workspaceFolder}/tasks/",
       "remoteRoot": "/app",
       "protocol": "inspector",
       "restart": true

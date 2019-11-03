@@ -1,7 +1,7 @@
 const _ = require('underscore')
 const { unimplemented } = require('productivize-tools').decorators.express
 
-async function ping (req, res) {
+async function ping(req, res) {
   try {
     const now = await this.db.ping()
     res.json({ success: true, params: req.params, query: req.query, body: req.body, user: res.locals.user, db: now.rows })
@@ -10,7 +10,7 @@ async function ping (req, res) {
   }
 }
 
-async function getAll (req, res) {
+async function getAll(req, res) {
   try {
     const response = await this.db.getAll()
     res.json({ success: true, db: response })
@@ -19,7 +19,7 @@ async function getAll (req, res) {
   }
 }
 
-async function insert (req, res) {
+async function insert(req, res) {
   try {
     const db = this.db
     const response = await db.create()

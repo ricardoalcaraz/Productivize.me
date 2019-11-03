@@ -4,7 +4,7 @@ services:
     image: node:12-alpine
     working_dir: /app
     volumes:
-      - ./habits/api:/app
+      - ./habits:/app
     ports:
       - "9229:9229"
     command: sh -c "npm install && npm run dev"
@@ -12,7 +12,7 @@ services:
     image: node:12-alpine
     working_dir: /app
     volumes:
-      - ./users/api:/app
+      - ./users:/app
     ports:
       - "9230:9229"
     command: sh -c "npm install && npm run dev"
@@ -20,7 +20,7 @@ services:
     image: node:12-alpine
     working_dir: /app
     volumes:
-      - ./tasks/api:/app
+      - ./tasks:/app
     ports:
       - "9231:9229"
     command: sh -c "npm install && npm run dev"

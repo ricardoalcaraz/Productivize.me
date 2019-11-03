@@ -13,7 +13,6 @@ SET row_security = off;
 -- TOC entry 3005 (class 1262 OID 13117)
 -- Name: postgres; Type: DATABASE; Schema: -; Owner: postgres
 --
-
 CREATE DATABASE habit WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
 CREATE DATABASE plant WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
 CREATE DATABASE time WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
