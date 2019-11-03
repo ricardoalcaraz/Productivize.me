@@ -24,3 +24,12 @@ services:
     ports:
       - "9231:9229"
     command: sh -c "npm install && npm run dev"
+  db:
+    volumes:
+      - db-data-dev:/var/lib/postgresql/data
+  db-admin:
+    volumes:
+      - db-admin-dev:/pgdata
+volumes:
+    db-data-dev:
+    db-admin-dev:
