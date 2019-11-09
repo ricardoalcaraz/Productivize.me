@@ -1,20 +1,20 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
-import SignInScreen from './screens/HomeScreen.js'
-import MainScreen from './screens/Main.js'
-import AuthLoadingScreen from './screens/AuthLoadingScreen.js'
+import MainScreen from './src/Main'
+import Bootstrapper from './src/Bootstraper'
+import AuthenticationGateway from './src/Authentication/AuthenticationGateway'
 
-const AppStack = createStackNavigator({ Home: MainScreen });
-const AuthStack = createStackNavigator({ SignIn: SignInScreen });
+const AppStack = createStackNavigator({ Home: MainScreen, Other: MainScreen })
+const AuthStack = createStackNavigator({ Gateway: AuthenticationGateway })
 
 const AppNavigator = createSwitchNavigator(
   {
-    AuthLoading: AuthLoadingScreen,
+    Bootstrapper: Bootstrapper,
     App: AppStack,
     Auth: AuthStack
   },
   {
-    initialRouteName: 'AuthLoading'
+    initialRouteName: 'Bootstrapper'
   }
 )
 
