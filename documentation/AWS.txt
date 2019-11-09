@@ -11,14 +11,14 @@ to make an admin user.
 
 make the aws power folder:
 with auth.json file inside with details:
-```.json
+```json
 {
   "UserPoolId": "<AWS_POOL_ID>",
   "ClientId": "<AWS_CLIENT_ID>",
   "AuthFlow": "ADMIN_NO_SRP_AUTH",
   "AuthParameters": {
-    "USERNAME": "<username>",
-    "PASSWORD": "<password>"
+    "USERNAME": "<AWS_DEMO_USERNAME>",
+    "PASSWORD": "<AWS_DEMO_PASSWORD>"
   }
 }
 ```

@@ -5,6 +5,7 @@ module.exports = {
     commonjs: true,
     es6: true
   },
+  parser: 'babel-eslint',
   extends: [
     'standard',
     'plugin:react/recommended'
