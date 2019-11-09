@@ -30,6 +30,14 @@ services:
   db-admin:
     volumes:
       - db-admin-dev:/pgdata
+  server:
+      ports:
+        - "37101:443"
+      build:
+        context: .
+        dockerfile: nginx/DOCKERFILE
+        args:
+          - CONF_FILE=nginx.dev.conf
 volumes:
     db-data-dev:
     db-admin-dev:

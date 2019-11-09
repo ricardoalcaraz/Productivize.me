@@ -1,7 +1,9 @@
 FROM nginx:alpine
-
+ARG CONF_FILE
 RUN rm /etc/nginx/conf.d/default.conf
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx/${CONF_FILE} /etc/nginx/nginx.conf
+COPY ./nginx/dev.crt /etc/nginx/dev.crt
+COPY ./nginx/dev.key /etc/nginx/dev.key
 
 #Copy files that will be served to the client
 #COPY ./client/src/index.css /usr/share/nginx/html
