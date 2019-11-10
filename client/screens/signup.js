@@ -6,13 +6,13 @@ export default class Signup extends Component {
       return (
       <View style={styles.container}>
         <Text>Please Sign In</Text>
-        <View style={userInput.container}>
+        <View style={styles.userInput}>
           <Text>Username: </Text>
           <TextInput
           placeholder="Username"
           />
         </View>
-        <View style={userInput.container}>
+        <View style={styles.userInput}>
           <Text>Password: </Text>
           <TextInput
           placeholder="Password"
@@ -37,11 +37,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
-  }
-})
-
-const userInput = StyleSheet.create({
-  container:{
+  },
+  userInput: {
     flexDirection: 'row',
     alignItems: 'center',
   }
