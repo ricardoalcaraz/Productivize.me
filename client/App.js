@@ -1,21 +1,16 @@
-import { createAppContainer, createSwitchNavigator } from 'react-navigation'
-import { createStackNavigator } from 'react-navigation-stack'
-import MainScreen from './src/Main'
-import Bootstrapper from './src/Bootstraper'
-import AuthenticationGateway from './src/Authentication/AuthenticationGateway'
+import React from 'react'
+import Navigator from './src/Navigator'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import taskReducer from './src/Tasks/Store/TaskReducer'
 
-const AppStack = createStackNavigator({ Home: MainScreen, Other: MainScreen })
-const AuthStack = createStackNavigator({ Gateway: AuthenticationGateway })
-
-const AppNavigator = createSwitchNavigator(
-  {
-    Bootstrapper: Bootstrapper,
-    App: AppStack,
-    Auth: AuthStack
-  },
-  {
-    initialRouteName: 'Bootstrapper'
+const store = createStore(taskReducer)
+export default class App extends React.Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <Navigator />
+      </Provider>
+    )
   }
-)
-
-export default createAppContainer(AppNavigator)
+}

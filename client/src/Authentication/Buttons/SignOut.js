@@ -6,12 +6,12 @@ import awsconfig from '../../../aws-exports'
 Amplify.configure(awsconfig)
 
 export default class SignOut extends Component {
-  onSignOutSuccess() {
+  _onSignOutSuccess() {
     const { onSignOutSuccess } = this.props
     onSignOutSuccess && onSignOutSuccess()
   }
 
-  onSignOutFailure() {
+  _onSignOutFailure() {
     const { onSignOutFailure } = this.props
     onSignOutFailure && onSignOutFailure()
   }
@@ -19,9 +19,9 @@ export default class SignOut extends Component {
   async handleSignOut() {
     try {
       await Auth.signOut()
-      this.onSignOutSuccess()
+      this._onSignOutSuccess()
     } catch (error) {
-      this.onSignOutFailure(error)
+      this._onSignOutFailure(error)
     }
   }
 
