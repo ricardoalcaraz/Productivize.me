@@ -8,21 +8,25 @@ export default class HabitRow extends React.Component {
     render() {
         const habit = this.props.habit
         return (
-          <View>
+          <View style={styles.container}>
             <Text style={styles.title}>{habit.description}</Text>
+            <Text>{habit.frequency_description}</Text>
           </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
+  container:{
     flexDirection: 'row',
-    alignItems: 'center', 
-    justifyContent: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between'
   },
-  title: {
-    fontSize: 20
+  description: {
+    flex: 0.8, 
+    fontSize: 12
+  },
+  frequency: {
+    flex: 0.2, 
   }
 })

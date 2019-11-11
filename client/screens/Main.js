@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
-import { TextInput } from 'react-native-gesture-handler'
+import { TextInput, ScrollView } from 'react-native-gesture-handler'
 import HabitList from './Habits/HabitList.js'
 
 export default class MainScreen extends React.Component {
@@ -8,7 +8,9 @@ export default class MainScreen extends React.Component {
         return (
           <View style={styles.container}>
             <Text>Your Habits</Text>
-            <HabitList habits={HABITS}></HabitList>
+            <ScrollView>
+              <HabitList habits={HABITS}></HabitList>
+            </ScrollView>
           </View>
         )
     }
@@ -16,7 +18,6 @@ export default class MainScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
     alignItems: 'center', 
     justifyContent: 'center'
   },
