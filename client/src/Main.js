@@ -1,9 +1,7 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Button } from 'react-native'
 import PropTypes from 'prop-types'
 import SignOut from './Authentication/Buttons/SignOut'
-import AsyncDemo from './Utility/AsyncStorageDemo'
-import AmplifyDemo from './Utility/AmplifyDemo'
 
 export default class Main extends React.Component {
   static navigationOptions = {
@@ -14,12 +12,9 @@ export default class Main extends React.Component {
     const { navigation } = this.props
     return (
       <View style={styles.container}>
-        <View>
-          <Text>Main Page Bitch</Text>
-          <SignOut onSignOutSuccess={() => navigation.navigate('Bootstrapper')} onSignOutFailure={(e) => alert(e)} />
-        </View>
-        <AsyncDemo />
-        <AmplifyDemo />
+        <Text>Main Page Bitch</Text>
+        <SignOut onSignOutSuccess={() => navigation.navigate('Bootstrapper')} onSignOutFailure={(e) => alert(e)} />
+        <Button title='Tasks' onPress={() => { navigation.push('Tasks') }} />
       </View>
     )
   }
@@ -28,7 +23,7 @@ export default class Main extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
