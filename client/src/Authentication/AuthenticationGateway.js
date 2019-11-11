@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, StyleSheet, Switch, Text } from 'react-native'
+import { View, StyleSheet, Switch, Text, Button } from 'react-native'
 import SignIn from './Forms/SignIn'
 import SignUp from './Forms/SignUp'
 
@@ -24,6 +24,7 @@ export default class AuthenticationGateway extends Component {
         {this.state.signUpVisible
           ? <SignUp navigation={this.props.navigation} Auth={Auth} />
           : <SignIn navigation={this.props.navigation} Auth={Auth} />}
+        <Button title='skip' onPress={() => this.props.navigation.navigate('App')} />
       </View>
     )
   }
