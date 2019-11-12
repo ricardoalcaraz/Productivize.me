@@ -20,5 +20,4 @@ const Navigator = createAppContainer(createSwitchNavigator(
   }
 ))
 
-// how do i put redux store around this?
 export default Navigator
