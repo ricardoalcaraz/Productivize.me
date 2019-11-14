@@ -1,54 +1,38 @@
 import { combineReducers } from 'redux'
-import { some, find, reject, matcher } from 'underscore'
+import { ADD_TASK, DELETE_TASK, UPDATE_TASK } from './TaskActions'
+import Task from '../Task'
+
 // name, date, description, completed
 const INITIAL_STATE = {
-  storage: [{ name: 'Brush Teeth', date: '111119', description: '2 minutes pls.', completed: false }]
-}
-
-const findTask = (storage, name) => find(storage, matcher({ name }))
-const taskExists = (storage, task) => some(findTask(storage, task.name))
-const filterTasks = (storage, name) => reject(storage, matcher({ name }))
-
-function addTask(state, action) {
-  const { storage } = state
-  const task = action.payload
-  if (!taskExists(storage, task)) {
-    const newStorage = storage.slice(0)
-    newStorage.push(task)
-    return { storage: newStorage }
-  }
-  return state
-}
-
-function deleteTask(state, action) {
-  const { storage } = state
-  const taskName = action.payload
-  if (taskExists(storage, { name: taskName })) {
-    const newStorage = filterTasks(storage, taskName)
-    return { storage: newStorage }
-  }
-  return state
-}
-
-function updateTask(state, action) {
-  const { storage } = state
-  const task = action.payload
-  if (taskExists(storage, { name: task.name })) {
-    const newStorage = filterTasks(storage, task.name)
-    newStorage.push(task)
-    return { storage: newStorage }
-  }
-  return state
+  tasks: [
+    { id: 'uuid', name: 'Brush Teeth', date: '111119', description: '2 minutes pls.', completed: false }
+  ]
 }
 
 const tasksReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case 'ADD_TASK':
-      return addTask(state, action)
-    case 'DELETE_TASK':
-      return deleteTask(state, action)
-    case 'UPDATE_TASK':
-      return updateTask(state, action)
+    case ADD_TASK:
+      return Object.assign({}, state, {
+        tasks: [
+          ...state.tasks,
+          action.task
+        ]
+      })
+    case DELETE_TASK:
+      return Object.assign({}, state, {
+        tasks:
+          state.tasks.filter(t => t.id !== action.id)
+      })
+    case UPDATE_TASK:
+      return Object.assign({}, state, {
+        tasks: state.tasks.map(task => {
+          if (task.id === action.task.id) {
+            return new Task(Object.assign({}, task, action.task))
+          } else {
+            return task
+          }
+        })
+      })
     default:
       return state
   }

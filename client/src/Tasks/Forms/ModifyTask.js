@@ -1,13 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, TextInput, Button } from 'react-native'
-import { defaults } from 'underscore'
+import uuidv1 from 'uuid/v1'
+import Task from '../Task'
 
+const DEFAULT_TASK = { name: '', description: '', date: '' }
 export default class ModifyTask extends React.Component {
   constructor(props) {
     super(props)
-    const { name, description, date } = defaults(props.template, { name: '', description: '', date: '' })
+    const { id, name, description, date } = Object.assign({}, DEFAULT_TASK, props.template)
     this.state = {
+      id: id || uuidv1(),
       name: name,
       description: description,
       date: date,
@@ -22,7 +25,7 @@ export default class ModifyTask extends React.Component {
 
   handleSaveTask() {
     // create's a task task
-    const task = this.state
+    const task = new Task(this.state)
     this._onSave(task)
   }
 

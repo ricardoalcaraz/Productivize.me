@@ -13,7 +13,6 @@ class Tasks extends React.Component {
   }
 
   handleSaveTask(task) {
-    console.log(this.state.placeholder)
     if (this.state.placeholder) {
       this.props.updateTask(task)
     } else {
@@ -23,7 +22,7 @@ class Tasks extends React.Component {
   }
 
   handleDeleteTask(task) {
-    this.props.deleteTask(task.name)
+    this.props.deleteTask(task.id)
   }
 
   showModal(status, placeholder) {
@@ -36,7 +35,7 @@ class Tasks extends React.Component {
         <Text>Tasks Remaining: {this.props.tasks.length}</Text>
         {this.props.tasks.map((task, index) => (
           <View key={index}>
-            <Text><CheckBox /> Name: {task.name}, Due: {task.date}, Description: {task.description}</Text>
+            <Text><CheckBox /> id: {task.id}, Name: {task.name}, Due: {task.date}, Description: {task.description}</Text>
             <Button title='edit' onPress={this.showModal.bind(this, true, task)} />
             <Button title='delete' onPress={this.handleDeleteTask.bind(this, task)} />
           </View>
@@ -61,7 +60,7 @@ Tasks.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  return { tasks: state.tasks.storage }
+  return { tasks: state.tasks.tasks }
 }
 
 const mapDispatchToProps = dispatch => (

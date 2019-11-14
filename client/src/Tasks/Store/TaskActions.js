@@ -1,21 +1,24 @@
-export const addTask = task => (
-  {
-    type: 'ADD_TASK',
-    payload: task
-  }
-)
+export const ADD_TASK = 'ADD_TASK'
+export const DELETE_TASK = 'DELETE__TASK'
+export const UPDATE_TASK = 'UPDATE_TASK'
 
-export const deleteTask = taskName => (
-  {
-    type: 'DELETE_TASK',
-    payload: taskName
+export function addTask(task) {
+  return {
+    type: ADD_TASK,
+    task
   }
-)
+}
 
-// must have a name field, and at least one modified field in payload.
-export const updateTask = task => (
-  {
-    type: 'UPDATE_TASK',
-    payload: task
+export function deleteTask(id) {
+  return {
+    type: DELETE_TASK,
+    id
   }
-)
+}
+
+export function updateTask(task) {
+  return {
+    type: UPDATE_TASK,
+    task
+  }
+}
