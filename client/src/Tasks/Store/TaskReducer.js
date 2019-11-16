@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 import { ADD_TASK, DELETE_TASK, UPDATE_TASK } from './TaskActions'
-import Task from '../Task'
 
 // name, date, description, completed
 const INITIAL_STATE = {
@@ -27,14 +26,14 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
       return Object.assign({}, state, {
         tasks: state.tasks.map(task => {
           if (task.id === action.task.id) {
-            return new Task(Object.assign({}, task, action.task))
+            return Object.assign({}, task, action.task)
           } else {
             return task
           }
         })
       })
-    default: 
-      return INITIAL_STATE
+    default:
+      return state
   }
 }
 

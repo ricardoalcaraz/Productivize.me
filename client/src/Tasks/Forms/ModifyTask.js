@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, TextInput, Button } from 'react-native'
 import uuidv1 from 'uuid/v1'
-import Task from '../Task'
 
 const DEFAULT_TASK = { name: '', description: '', date: '' }
 export default class ModifyTask extends React.Component {
@@ -25,7 +24,7 @@ export default class ModifyTask extends React.Component {
 
   handleSaveTask() {
     // create's a task task
-    const task = new Task(this.state)
+    const task = this.state
     this._onSave(task)
   }
 
