@@ -5,7 +5,7 @@ import Amplify, { Auth } from 'aws-amplify'
 import awsconfig from '../aws-exports'
 Amplify.configure(awsconfig)
 
-export default class Bootstraper extends React.Component {
+export default class Bootstrapper extends React.Component {
   componentDidMount() {
     this._bootstrap()
   }
@@ -36,6 +36,6 @@ export default class Bootstraper extends React.Component {
   }
 }
 
-Bootstraper.propTypes = {
+Bootstrapper.propTypes = {
   navigation: PropTypes.object
 }

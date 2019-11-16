@@ -1,5 +1,4 @@
-import { combineReducers } from 'redux'
-import { ADD_TASK, DELETE_TASK, UPDATE_TASK } from './TaskActions'
+import { ADD_TASK, DELETE_TASK, UPDATE_TASK } from '../Tasks/Store/TaskActions'
 
 // name, date, description, completed
 const INITIAL_STATE = {
@@ -37,6 +36,4 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
   }
 }
 
-export default combineReducers({
-  tasks: tasksReducer
-})
+export default tasksReducer

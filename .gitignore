@@ -98,3 +98,8 @@ public
 .dynamodb/
 
 .aws/
+client/ios/Podfile.lock
+.DS_Store
+*.pbxproj
+*.xcworkspacedata
+*.plist

@@ -15,6 +15,7 @@ export default class Main extends React.Component {
         <Text>Main Page Bitch</Text>
         <SignOut onSignOutSuccess={() => navigation.navigate('Bootstrapper')} onSignOutFailure={(e) => alert(e)} />
         <Button title='Tasks' onPress={() => { navigation.push('Tasks') }} />
+        <Button title='Habits' onPress={() => { navigation.push('Habits') }} />
       </View>
     )
   }
