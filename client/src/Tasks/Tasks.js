@@ -68,6 +68,6 @@ const mapDispatchToProps = dispatch => (
     addTask,
     updateTask,
     deleteTask
-  })
+  }, dispatch)
 )
 export default connect(mapStateToProps, mapDispatchToProps)(Tasks)
