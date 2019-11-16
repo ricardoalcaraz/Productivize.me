@@ -2,24 +2,31 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View, Text, Button, Modal, CheckBox } from 'react-native'
 import { connect } from 'react-redux'
-import CreateTask from './Forms/CreateTask'
+import ModifyTask from './Forms/ModifyTask'
 import { bindActionCreators } from 'redux'
-import { addTask } from './Store/TaskActions'
+import { addTask, deleteTask, updateTask } from './Store/TaskActions'
 
-class
-Tasks extends React.Component {
+class Tasks extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { creatingTask: false }
+    this.state = { showModal: false, placeholder: null }
   }
 
-  handleCreateTask(task) {
-    this.props.addTask(task)
-    this.setState({ creatingTask: false })
+  handleSaveTask(task) {
+    if (this.state.placeholder) {
+      this.props.updateTask(task)
+    } else {
+      this.props.addTask(task)
+    }
+    this.setState({ showModal: false, placeholder: null })
   }
 
-  setCreatingTask(status) {
-    this.setState({ creatingTask: status })
+  handleDeleteTask(task) {
+    this.props.deleteTask(task.id)
+  }
+
+  showModal(status, placeholder) {
+    this.setState({ showModal: status, placeholder: placeholder })
   }
 
   render() {
@@ -27,14 +34,18 @@ Tasks extends React.Component {
       <View>
         <Text>Tasks Remaining: {this.props.tasks.length}</Text>
         {this.props.tasks.map((task, index) => (
-          <Text key={index}>#{index} <CheckBox /> Name: {task.name}, Due: {task.date}, Description: {task.description}</Text>
+          <View key={index}>
+            <Text><CheckBox /> id: {task.id}, Name: {task.name}, Due: {task.date}, Description: {task.description}</Text>
+            <Button title='edit' onPress={this.showModal.bind(this, true, task)} />
+            <Button title='delete' onPress={this.handleDeleteTask.bind(this, task)} />
+          </View>
         ))}
-        <Button title='new task' onPress={this.setCreatingTask.bind(this, true)} />
+        <Button title='new task' onPress={this.showModal.bind(this, true, null)} />
         <Modal
-          visible={this.state.creatingTask}
+          visible={this.state.showModal}
           animationType="slide"
           transparent={false}>
-          <CreateTask onCreate={this.handleCreateTask.bind(this)} onCancel={this.setCreatingTask.bind(this, false)} />
+          <ModifyTask template={this.state.placeholder} onSave={this.handleSaveTask.bind(this)} onCancel={this.showModal.bind(this, false, null)} />
         </Modal>
       </View >
     )
@@ -43,16 +54,20 @@ Tasks extends React.Component {
 
 Tasks.propTypes = {
   tasks: PropTypes.array,
-  addTask: PropTypes.func
+  addTask: PropTypes.func,
+  updateTask: PropTypes.func,
+  deleteTask: PropTypes.func
 }
 
 const mapStateToProps = (state) => {
-  return { tasks: state.tasks.storage }
+  return { tasks: state.tasks.tasks }
 }
 
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
-    addTask
-  }, dispatch)
+    addTask,
+    updateTask,
+    deleteTask
+  })
 )
 export default connect(mapStateToProps, mapDispatchToProps)(Tasks)
