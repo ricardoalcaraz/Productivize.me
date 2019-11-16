@@ -25,6 +25,11 @@ class Tasks extends React.Component {
     this.props.deleteTask(task.id)
   }
 
+  handleTaskAction(task) {
+    task.completed = !task.completed
+    this.props.updateTask(task)
+  }
+
   showModal(status, placeholder) {
     this.setState({ showModal: status, placeholder: placeholder })
   }
@@ -35,7 +40,8 @@ class Tasks extends React.Component {
         <Text>Tasks Remaining: {this.props.tasks.length}</Text>
         {this.props.tasks.map((task, index) => (
           <View key={index}>
-            <Text><CheckBox /> id: {task.id}, Name: {task.name}, Due: {task.date}, Description: {task.description}</Text>
+            <CheckBox value={task.completed} onValueChange={this.handleTaskAction.bind(this, task)} />
+            <Text>id: {task.id}, Name: {task.name}, Due: {task.date}, Description: {task.description}, Status: {(task.completed ? 'complete' : 'active')} </Text>
             <Button title='edit' onPress={this.showModal.bind(this, true, task)} />
             <Button title='delete' onPress={this.handleDeleteTask.bind(this, task)} />
           </View>
