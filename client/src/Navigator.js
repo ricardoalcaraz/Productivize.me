@@ -3,10 +3,11 @@ import { createStackNavigator } from 'react-navigation-stack'
 
 import Main from './Main'
 import Tasks from './Tasks/Tasks'
+import Identities from './Identity/Identities'
 import Bootstrapper from './Bootstraper'
 import AuthenticationGateway from './Authentication/AuthenticationGateway'
 
-const AppStack = createStackNavigator({ Home: Main, Tasks: Tasks })
+const AppStack = createStackNavigator({ Home: Main, Tasks: Tasks, Identities: Identities })
 const AuthStack = createStackNavigator({ Gateway: AuthenticationGateway })
 
 const Navigator = createAppContainer(createSwitchNavigator(
