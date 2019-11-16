@@ -33,6 +33,10 @@ const tasksReducer = (state = INITIAL_STATE, action) => {
           }
         })
       })
+    default: 
+      return INITIAL_STATE
+  }
+}
 
 export default combineReducers({
   tasks: tasksReducer
