@@ -21,15 +21,17 @@ List.propTypes = {
 }
 
 const filterTasks = (tasks, filter) => {
+  // convert keyed object to array.
+  const array = Object.keys(tasks).map((key) => tasks[key])
   switch (filter) {
     default:
-      return tasks
+      return array
   }
 }
 
 const mapStateToProps = state => {
   return {
-    tasks: filterTasks(state.tasks.storage, state.tasks.filter)
+    tasks: filterTasks(state.tasks.items, state.tasks.filter)
   }
 }
 

@@ -12,6 +12,7 @@ const TaskDashboard = ({ Auth }) => (
     <Text>Test</Text>
     <TaskList filter='none' />
     <Button title='Test Endpoint' onPress={() => test(Auth)} />
+    <Button title='Refresh Endpoints' />
   </SafeAreaView >
 )
 
