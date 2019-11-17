@@ -1,10 +1,13 @@
 import React from 'react'
 import Navigator from './src/Navigator'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import taskReducer from './src/Tasks/Store/TaskReducer'
+import { createStore, combineReducers } from 'redux'
+import tasksReducer from './src/Tasks/Store/Reducer'
 
-const store = createStore(taskReducer)
+const store = createStore(combineReducers({
+  tasks: tasksReducer
+}))
+
 export default class App extends React.Component {
   render() {
     return (
