@@ -3,7 +3,9 @@ import { SafeAreaView, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
 import Task from './Task'
 
-const TaskList = ({ tasks, onPress }) => (
+import { connect } from 'react-redux'
+
+const List = ({ tasks, onPress }) => (
   <SafeAreaView>
     <FlatList
       data={tasks}
@@ -13,9 +15,24 @@ const TaskList = ({ tasks, onPress }) => (
   </SafeAreaView >
 )
 
-TaskList.propTypes = {
+List.propTypes = {
   tasks: PropTypes.array,
   onPress: PropTypes.func
 }
 
-export default TaskList
+const filterTasks = (tasks, filter) => {
+  switch (filter) {
+    default:
+      return tasks
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    tasks: filterTasks(state.tasks.storage, state.tasks.filter)
+  }
+}
+
+export default connect(
+  mapStateToProps
+)(List)

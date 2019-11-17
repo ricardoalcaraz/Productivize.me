@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import FilteredTaskList from './FilteredTaskLIst'
+import TaskList from './List'
 import { SafeAreaView, Text, Button } from 'react-native'
 import Authenticated from '../Authentication/Authenticated'
 function test(Auth) {
@@ -10,7 +10,7 @@ function test(Auth) {
 const TaskDashboard = ({ Auth }) => (
   <SafeAreaView>
     <Text>Test</Text>
-    <FilteredTaskList filter='none' />
+    <TaskList filter='none' />
     <Button title='Test Endpoint' onPress={() => test(Auth)} />
   </SafeAreaView >
 )
