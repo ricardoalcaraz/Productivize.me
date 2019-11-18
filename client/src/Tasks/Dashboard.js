@@ -4,19 +4,15 @@ import TaskList from './List'
 import { SafeAreaView, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fetchTasksIfNeeded, requestTasksUpdate } from './Actions'
+import { fetchTasksIfNeeded, requestTasksUpdate, pingTasksDatabase } from './Actions'
 
-function test(Auth) {
-  alert(Auth)
-}
-
-const TaskDashboard = ({ tasks, isFetching, needsUpdate, response, filter, fetchTasksIfNeeded, requestTasksUpdate }) => (
+const TaskDashboard = ({ tasks, isFetching, needsUpdate, response, filter, fetchTasksIfNeeded, requestTasksUpdate, pingTasksDatabase }) => (
   <SafeAreaView>
     <Text>Test</Text>
-    <TaskList tasks={tasks} filter='none' onPress={(id) => test(id + ' says: nothing to see here')} />
-    <Button title='Test Asynchronous Call' onPress={() => fetchTasksIfNeeded('smashbros').then(d => alert('asynchronous call was a success'), e => alert(JSON.stringify(e)))} />
+    <TaskList tasks={tasks} filter='none' onPress={(id) => alert(id + ' says: nothing to see here')} />
+    <Button title='Test Asynchronous Call' onPress={() => fetchTasksIfNeeded().then(action => alert(JSON.stringify(action)))} />
     <Button title='Pollute Tasks' onPress={() => requestTasksUpdate()} />
-    <Button title='Refresh Endpoints' onPress={() => alert('test2')} />
+    <Button title='Ping Tasks Database' onPress={() => pingTasksDatabase().then(action => alert(JSON.stringify(action)))} />
     <Text>Currently Fetching: {isFetching.toString()}, Needs Update: {needsUpdate.toString()}</Text>
     <Text>{response.toString()}</Text>
   </SafeAreaView >
@@ -29,7 +25,8 @@ TaskDashboard.propTypes = {
   requestTasksUpdate: PropTypes.func,
   isFetching: PropTypes.bool,
   needsUpdate: PropTypes.bool,
-  response: PropTypes.string
+  response: PropTypes.string,
+  pingTasksDatabase: PropTypes.func
 }
 
 const filterTasks = (tasks, filter) => {
@@ -52,7 +49,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => (
   bindActionCreators({
     fetchTasksIfNeeded,
-    requestTasksUpdate
+    requestTasksUpdate,
+    pingTasksDatabase
   }, dispatch)
 )
 

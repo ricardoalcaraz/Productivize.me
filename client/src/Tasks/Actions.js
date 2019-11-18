@@ -37,17 +37,17 @@ export const TASKS_ATTEMPT_REQUEST = 'TASKS_REQ_MAKE'
 export const TASKS_REQUEST_SUCCESS = 'TASKS_REQ_SUCC'
 export const TASKS_REQUEST_FAILURE = 'TASKS_REQ_FAIL'
 
-function fetchTest(subreddit) {
+function fetchTasks() {
   return {
     [CALL_API]: {
       types: [TASKS_ATTEMPT_REQUEST, TASKS_REQUEST_SUCCESS, TASKS_REQUEST_FAILURE],
-      endpoint: `${subreddit}.json`
+      endpoint: 'tasks/'
     }
   }
 }
 
 function shouldFetchTasks(state) {
-  if (state.isUpdating) {
+  if (state.isFetching) {
     // return false
   } else {
     // return state.needsUpdate
@@ -55,14 +55,26 @@ function shouldFetchTasks(state) {
   return true
 }
 
-export function fetchTasksIfNeeded(securityToken) {
+export function fetchTasksIfNeeded() {
   return (dispatch, getState) => {
     if (shouldFetchTasks(getState())) {
-      // Dispatch a thunk from thunk!
-      return dispatch(fetchTest(securityToken))
+      return dispatch(fetchTasks())
     } else {
       // Let the calling code know there's nothing to wait for.
       return Promise.resolve()
+    }
+  }
+}
+
+export const TASKS_ATTEMPT_PING = 'TASKS_PING_MAKE'
+export const TASKS_PING_SUCCESS = 'TASKS_PING_SUCC'
+export const TASKS_PING_FAILURE = 'TASKS_PING_FAIL'
+
+export function pingTasksDatabase() {
+  return {
+    [CALL_API]: {
+      types: [TASKS_ATTEMPT_PING, TASKS_PING_SUCCESS, TASKS_PING_FAILURE],
+      endpoint: 'tasks/ping/hello_world'
     }
   }
 }

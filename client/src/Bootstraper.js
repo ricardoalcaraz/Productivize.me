@@ -15,12 +15,13 @@ export default class Bootstraper extends React.Component {
     setTimeout(async () => {
       // check if we have a valid refresh token and sign the user in
       try {
-        await Auth.Auth.currentAuthenticatedUser({
+        const user = await Auth.currentAuthenticatedUser({
           bypassCache: true // If set to true, this call will send a request to Cognito to get the latest user data
         })
+        console.log(`A user was found in the cache, continuing as: ${user.getUsername()}.`)
         navigation.navigate('App')
       } catch (e) {
-        console.log(e)
+        console.log(JSON.stringify(e))
         navigation.navigate('Auth')
       }
     }, 3000)
