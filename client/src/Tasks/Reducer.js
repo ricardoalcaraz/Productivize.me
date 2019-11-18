@@ -1,4 +1,12 @@
-import { ADD_TASK, DELETE_TASK, UPDATE_TASK, POLLUTE_TASKS, REQUEST_TASKS, RECEIVE_TASKS } from './Actions'
+import {
+  ADD_TASK,
+  DELETE_TASK,
+  UPDATE_TASK,
+  TASKS_REQUIRE_UPDATE,
+  TASKS_ATTEMPT_REQUEST,
+  TASKS_REQUEST_SUCCESS,
+  TASKS_REQUEST_FAILURE
+} from './Actions'
 
 // name, date, description, completed
 const INITIAL_STATE = {
@@ -34,37 +42,60 @@ const INITIAL_STATE = {
   },
   filter: 'all',
   lastUpdated: '',
-  isUpdating: false,
-  needsUpdate: false
+  isFetching: false,
+  needsUpdate: false,
+  response: 'none'
 }
 
-const tasksReducer = (state = INITIAL_STATE, action) => {
+const arrayToObject = (arr) =>
+  arr.reduce((obj, item) => {
+    obj[item.id] = item
+    return obj
+  }, {})
+
+const tasks = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_TASK:
-      return Object.assign({}, state, {})
+      return Object.assign({}, state, {
+        // idk if this works lol.
+        items: Object.assign({}, state.items, { [action.task.id]: action.task })
+      })
     case DELETE_TASK:
-      return Object.assign({}, state, {})
+      // eslint-disable-next-line no-case-declarations
+      const { [action.id]: _, ...otherTasks } = state.items
+      return Object.assign({},
+        state, {
+          items: arrayToObject(otherTasks)
+        })
     case UPDATE_TASK:
       return Object.assign({}, state, {})
-    case POLLUTE_TASKS:
+
+    // API-SHENANIGANS
+    case TASKS_REQUIRE_UPDATE:
       return Object.assign({}, state, {
-        needsUpdate: true
+        needsUpdate: true,
+        response: 'none'
       })
-    case REQUEST_TASKS:
+    case TASKS_ATTEMPT_REQUEST:
       return Object.assign({}, state, {
-        isUpdating: true,
-        needsUpdate: true
+        isFetching: true,
+        needsUpdate: false
       })
-    case RECEIVE_TASKS:
+    case TASKS_REQUEST_SUCCESS:
       return Object.assign({}, state, {
+        isFetching: false,
         needsUpdate: false,
-        isUpdating: false,
-        lastUpdated: action.receivedAt,
-        items: Object.assign({}, state.items, action.items)
+        response: JSON.stringify(action.response)
+      })
+    case TASKS_REQUEST_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        needsUpdate: true,
+        error: action.error
       })
     default:
       return state
   }
 }
 
-export default tasksReducer
+export default tasks

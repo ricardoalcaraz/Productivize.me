@@ -1,10 +1,12 @@
-import { createStore, combineReducers } from 'redux'
-import tasksReducer from '../Tasks/Reducer'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import tasks from '../Tasks/Reducer'
+import ApiMiddleware from './Api'
 
-const rootReducer = combineReducers({
-  tasks: tasksReducer
-})
+const rootReducer = combineReducers({ tasks: tasks })
 
-const store = createStore(rootReducer)
+const middlewareApplier = applyMiddleware(thunkMiddleware, ApiMiddleware)
+
+const store = createStore(rootReducer, middlewareApplier)
 
 export default store
