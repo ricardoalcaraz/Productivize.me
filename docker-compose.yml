@@ -87,7 +87,9 @@ services:
       container_name: nginx
       image: nginx
       ports:
-        - "37101:80"
+        - "37102:80"
+      environment:
+        - CONF_FILE=nginx.conf
       networks: 
         - frontend
       build:
