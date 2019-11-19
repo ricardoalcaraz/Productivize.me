@@ -22,8 +22,9 @@ async function getAll(req, res) {
 async function insert(req, res) {
   try {
     const db = this.db
-    const response = await db.create()
-    res.json({ success: true, db: response })
+    const task = Object.assign({}, req.body)
+    const response = await db.create(task)
+    res.json({ success: true, response: response })
   } catch (e) {
     res.status(500).send(e.stack)
   }

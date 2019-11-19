@@ -1,16 +1,19 @@
 // https://github.com/reduxjs/redux/blob/master/examples/real-world/src/middleware/api.js
 // https://github.com/reduxjs/redux/blob/master/examples/real-world/src/actions/index.js
 
-const API_ROOT = 'http://192.168.30.81:37101/api/'
+const API_ROOT = 'http://172.18.46.129:37101/api/'
 
-const callApi = (endpoint, securityTokens) => {
+const callApi = (endpoint, method, securityTokens, body = {}) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
-  return fetch(fullUrl, {
-    method: 'GET',
+  return fetch(fullUrl, Object.assign({}, {
+    method: method,
     headers: {
+      'Content-Type': 'application/json',
       accesstoken: `${securityTokens.access.jwtToken}`
     }
-  }).then(
+
+  }, method === 'GET' ? {} : { body: JSON.stringify(body) }
+  )).then(
     response => {
       console.log(response); return response.text().then(json => {
         if (!response.ok) return Promise.reject(json)
@@ -24,10 +27,12 @@ export const CALL_API = 'CALL_API'
 export default store => next => action => {
   if (typeof action[CALL_API] === 'undefined') return next(action)
 
-  const { types, endpoint, securityTokens } = action[CALL_API]
-  console.log('Incoming Tokens:', JSON.stringify(securityTokens.access))
+  const { types, method, endpoint, body, securityTokens } = action[CALL_API]
+
   if (typeof endpoint !== 'string') throw new Error('Specify URL')
   if (!Array.isArray(types) || types.length !== 3) throw new Error('Expected an array of three action types.')
+  if (typeof method !== 'string') throw new Error('Specify method')
+  if (!['GET', 'POST'].includes(method)) throw new Error('specify get or post method only')
 
   const actionWith = data => {
     const finalAction = Object.assign({}, action, data)
@@ -38,7 +43,7 @@ export default store => next => action => {
   const [requestType, successType, failureType] = types
   next(actionWith({ type: requestType }))
 
-  return callApi(endpoint, securityTokens).then(
+  return callApi(endpoint, method, securityTokens, body).then(
     response => next(actionWith({
       response,
       type: successType

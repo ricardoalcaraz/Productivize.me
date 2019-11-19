@@ -16,7 +16,8 @@ export default class SignIn extends Component {
     const { username, password } = this.state
     try {
       const user = await Auth.signIn(username, password)
-      // console.log(JSON.stringify(user))
+      const session = user.getSignInUserSession()
+      console.log(JSON.stringify(session.getAccessToken()))
       navigation.navigate('App')
     } catch (error) {
       alert(JSON.stringify(error))

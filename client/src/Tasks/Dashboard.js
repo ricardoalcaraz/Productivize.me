@@ -4,15 +4,22 @@ import TaskList from './List'
 import { SafeAreaView, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fetchTasksIfNeeded, requestTasksUpdate, pingTasksDatabase } from './Actions'
+import { fetchTasksIfNeeded, requestTasksUpdate, pingTasksDatabase, createTask } from './Actions'
 
-const TaskDashboard = ({ tasks, isFetching, needsUpdate, response, filter, fetchTasksIfNeeded, requestTasksUpdate, pingTasksDatabase }) => (
+const testTask = {
+  name: 'test',
+  description: 'test',
+  completed: false,
+  time_required: '30:00'
+}
+const TaskDashboard = ({ tasks, isFetching, needsUpdate, response, filter, fetchTasksIfNeeded, requestTasksUpdate, pingTasksDatabase, createTask }) => (
   <SafeAreaView>
     <Text>Test</Text>
     <TaskList tasks={tasks} filter='none' onPress={(id) => alert(id + ' says: nothing to see here')} />
     <Button title='Test Asynchronous Call' onPress={() => fetchTasksIfNeeded().then(action => alert(JSON.stringify(action)))} />
     <Button title='Pollute Tasks' onPress={() => requestTasksUpdate()} />
     <Button title='Ping Tasks Database' onPress={() => pingTasksDatabase().then(action => alert(JSON.stringify(action)))} />
+    <Button title='Create Test Task' onPress={() => createTask(testTask).then(action => alert(JSON.stringify(action)))} />
     <Text>Currently Fetching: {isFetching.toString()}, Needs Update: {needsUpdate.toString()}</Text>
     <Text>{response.toString()}</Text>
   </SafeAreaView >
@@ -26,7 +33,8 @@ TaskDashboard.propTypes = {
   isFetching: PropTypes.bool,
   needsUpdate: PropTypes.bool,
   response: PropTypes.string,
-  pingTasksDatabase: PropTypes.func
+  pingTasksDatabase: PropTypes.func,
+  createTask: PropTypes.func
 }
 
 const filterTasks = (tasks, filter) => {
@@ -50,7 +58,8 @@ const mapDispatchToProps = dispatch => (
   bindActionCreators({
     fetchTasksIfNeeded,
     requestTasksUpdate,
-    pingTasksDatabase
+    pingTasksDatabase,
+    createTask
   }, dispatch)
 )
 
