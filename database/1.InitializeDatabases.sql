@@ -48,42 +48,24 @@ CREATE TABLE garden (
 );
 
 \connect habit
-CREATE TABLE frequency (
-	identifier int PRIMARY KEY,
-	frequency_description VARCHAR(20)
-);
-
 CREATE TABLE habit (
 	identifier SERIAL PRIMARY KEY,
 	user_id VARCHAR(50) NOT NULL,
-	description VARCHAR(100) NOT NULL,
-	created_on timestamp NOT NULL,
-	start_date timestamp NOT NULL,
-	end_date timestamp NULL,
-	frequency_id int NOT NULL,
-	FOREIGN KEY(frequency_id) REFERENCES frequency(identifier)
+	data jsonb
 );
 
 \connect task
 CREATE TABLE task (
 	identifier SERIAL PRIMARY KEY,
-	date TIMESTAMP NULL,
-	name VARCHAR(20) NOT NULL,
-	description VARCHAR(50) NOT NULL,
-	completed BOOLEAN NOT NULL,
-	time_required VARCHAR(20) NULL
+	user_id VARCHAR(50) NOT NULL,
+	data jsonb
 );
-
-CREATE TABLE standalone_task (
-	identifier SERIAL PRIMARY KEY,
-	user_ID VARCHAR(50) NOT NULL
-) INHERITS (task);
 
 CREATE TABLE completed_task (
 	identifier SERIAL PRIMARY KEY,
-	task_ID INT NOT NULL,
+	task_id INT NOT NULL,
 	date_completed TIMESTAMP NOT NULL,
-	user_ID VARCHAR(50) NOT NULL
+	FOREIGN KEY (task_id) REFERENCES task(identifier)
 );
 
 CREATE TABLE subtask (
@@ -95,6 +77,7 @@ CREATE TABLE subtask (
 \connect time
 CREATE TABLE time_keeping (
     identifier SERIAL PRIMARY KEY,
+	user_id VARCHAR(50) NOT NULL,
     task_ID INT NOT NULL,
     time_logged time NOT NULL
 );
