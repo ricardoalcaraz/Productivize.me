@@ -6,8 +6,9 @@ import Tasks from './Tasks/Tasks'
 import Habits from './Habits/Habits'
 import Bootstrapper from './Bootstrapper'
 import AuthenticationGateway from './Authentication/AuthenticationGateway'
+import AddHabit from './Habits/AddHabit'
 
-const AppStack = createStackNavigator({ Home: Main, Tasks: Tasks, Habits: Habits })
+const AppStack = createStackNavigator({ Home: Main, Tasks: Tasks, Habits: Habits, AddHabit })
 const AuthStack = createStackNavigator({ Gateway: AuthenticationGateway })
 
 const Navigator = createAppContainer(createSwitchNavigator(

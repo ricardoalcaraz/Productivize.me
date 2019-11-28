@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { View, Text, Button, TextInput } from 'react-native'
 import HabitList from './HabitList.js'
 import { connect } from 'react-redux'
-import {addHabit, deleteHabit} from './Store/HabitActions.js'
+
 
 class Habits extends React.Component {
   constructor(props){
@@ -12,14 +12,14 @@ class Habits extends React.Component {
   }
 
   render() {
+    const { navigation } = this.props
     return (
       <View>
         <Text>
           Hello From Habits!
         </Text>
-        <TextInput placeholder='Insert habit here' onChangeText={text => this.setState({text})}/>
         <HabitList habits={this.props.habits}></HabitList>
-        <Button title="Add Habit" onPress={() => this.props.addHabit({description: this.state.text})}/>
+        <Button title='Add Habits' onPress={() => {navigation.push('AddHabit')}}/>
       </View>
     )
   }
@@ -36,9 +36,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {
-  addHabit,
-  deleteHabit
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Habits)
+export default connect(mapStateToProps, null)(Habits)

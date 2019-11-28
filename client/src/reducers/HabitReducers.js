@@ -21,7 +21,7 @@ const INITIAL_STATE = {
         start_date: Date.now(),
         end_date: null,
         frequency_description: 'Daily' 
-    }],
+    }]
 }
 
 const habitReducer = (state = INITIAL_STATE, action) => {
