@@ -13,7 +13,7 @@ module.exports.secure = ({ app }) => {
     const accessTokenFromClient = req.headers.accesstoken
 
     // Fail if token not present in header.
-    if (!accessTokenFromClient) return res.status(401).send('Access Token missing from header')
+    if (!accessTokenFromClient) return res.status(401).send({error: 'Access Token missing from header'})
     console.log(accessTokenFromClient)
     next()
 

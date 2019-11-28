@@ -3,6 +3,7 @@ import { View, Text, Button, TextInput } from 'react-native'
 import { addHabit } from './Store/HabitActions.js'
 import { connect } from 'react-redux'
 
+//TODO: Expand this out and make it actually useful
 const AddHabit = (props) => {
     const[userInput, setUserInput] = React.useState('')
     return (

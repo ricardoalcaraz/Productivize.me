@@ -1,7 +1,4 @@
-import {ADD_HABIT, DELETE_HABIT} from '../Habits/Store/HabitActions.js'
-
-const AddHabit = () => ({type: HabitActions.AddHabit}, habit)
-const RemoveHabit = () => ({type: HabitActions.RemoveHabit}, habit)
+import {ADD_HABIT, DELETE_HABIT, SET_HABITS} from '../Habits/Store/HabitActions.js'
 
 const INITIAL_STATE = {
     habits: [{
@@ -27,6 +24,7 @@ const INITIAL_STATE = {
 const habitReducer = (state = INITIAL_STATE, action) => {
     switch(action.type){
         case ADD_HABIT:
+            action.habit.identifier = state.habits.length
             return Object.assign({}, state, {
                 habits: [
                     ...state.habits,
@@ -35,6 +33,10 @@ const habitReducer = (state = INITIAL_STATE, action) => {
             })
         case DELETE_HABIT:
             return state
+        case SET_HABITS:
+            return Object.assign({}, state, {
+                habits: action.habits
+            })
         default:
             return state
     }

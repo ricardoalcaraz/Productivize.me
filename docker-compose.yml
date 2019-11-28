@@ -88,13 +88,13 @@ services:
       image: nginx
       ports:
         - "37102:80"
-      environment:
-        - CONF_FILE=nginx.conf
       networks: 
         - frontend
       build:
           context: .
           dockerfile: nginx/DOCKERFILE
+          args:
+            - CONF_FILE=nginx.conf
       depends_on:
         - habits_api
         - users_api

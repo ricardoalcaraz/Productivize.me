@@ -1,7 +1,7 @@
 // https://github.com/reduxjs/redux/blob/master/examples/real-world/src/middleware/api.js
 // https://github.com/reduxjs/redux/blob/master/examples/real-world/src/actions/index.js
 
-const API_ROOT = 'http://172.18.46.129:37101/api/'
+const API_ROOT = 'https://www.ricardoalcaraz.dev/api/'
 
 const callApi = (endpoint, method, securityTokens, body = {}) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint

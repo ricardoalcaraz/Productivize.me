@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import TaskList from './List'
 import { SafeAreaView, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import { fetchTasksIfNeeded, requestTasksUpdate, pingTasksDatabase, createTask } from './Actions'
 
 const testTask = {
@@ -54,14 +53,12 @@ const mapStateToProps = state => {
     response: state.tasks.response
   }
 }
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
-    fetchTasksIfNeeded,
-    requestTasksUpdate,
-    pingTasksDatabase,
-    createTask
-  }, dispatch)
-)
+const mapDispatchToProps = {
+  fetchTasksIfNeeded,
+  requestTasksUpdate,
+  pingTasksDatabase,
+  createTask
+}
 
 export default connect(
   mapStateToProps,

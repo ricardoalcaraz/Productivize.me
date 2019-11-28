@@ -13,9 +13,22 @@ async function ping (req, res) {
 async function getAll (req, res) {
   try {
     const response = await this.db.getAll()
-    res.json({ success: true, db: response })
+    const habits = response.map((h) => {
+      h.data.identifier = h.identifier
+      return h.data
+    })
+    res.json({ success: true, db: habits })
   } catch (e) {
     res.status(500).send(e.stack)
+  }
+}
+
+async function syncHabits(req, res) {
+  try{
+    let response = await this.db.syncHabits(req.body)
+    res.json({success: true})
+  } catch(ex){
+
   }
 }
 
@@ -34,4 +47,6 @@ module.exports = ({ app, db }) => {
   app.post('/delete', unimplemented)
 
   app.post('/share', unimplemented)
+
+  app.post('/sync', _.bind(syncHabits, { db }))
 }

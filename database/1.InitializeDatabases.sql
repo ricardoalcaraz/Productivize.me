@@ -53,8 +53,10 @@ CREATE TABLE garden (
 );
 
 \connect habit
+CREATE EXTENSION "uuid-ossp";
+SELECT uuid_generate_v1mc();
 CREATE TABLE habit (
-	identifier SERIAL PRIMARY KEY,
+	identifier UUID PRIMARY KEY DEFAULT uuid_generate_v1mc(),
 	user_id VARCHAR(50) NOT NULL,
 	data jsonb
 );
@@ -63,19 +65,10 @@ CREATE TABLE habit (
 CREATE EXTENSION "uuid-ossp";
 SELECT uuid_generate_v1mc();
 CREATE TABLE task (
-<<<<<<< HEAD
-	identifier SERIAL PRIMARY KEY,
-	user_id VARCHAR(50) NOT NULL,
-	data jsonb
-);
-
-=======
 	identifier UUID PRIMARY KEY DEFAULT uuid_generate_v1mc(),
-	date TIMESTAMP NULL,
-	name VARCHAR(20) NOT NULL,
-	description VARCHAR(50) NOT NULL,
+	user_id VARCHAR(50) NOT NULL,
 	completed BOOLEAN NOT NULL,
-	time_required VARCHAR(20) NULL
+	data jsonb
 );
 
 CREATE TABLE standalone_task (
@@ -83,10 +76,9 @@ CREATE TABLE standalone_task (
 	user_ID VARCHAR(50) NOT NULL
 ) INHERITS (task);
 
->>>>>>> tasks
 CREATE TABLE completed_task (
 	identifier SERIAL PRIMARY KEY,
-	task_id INT NOT NULL,
+	task_id UUID NOT NULL,
 	date_completed TIMESTAMP NOT NULL,
 	FOREIGN KEY (task_id) REFERENCES task(identifier)
 );

@@ -29,7 +29,7 @@ const INITIAL_STATE = {
       id: '742a9576-096f-11ea-8d71-362b9e155667',
       name: 'another',
       date: '',
-      sdescription: 'three',
+      description: 'three',
       completed: false
     },
     '7a314c76-096f-11ea-9a9f-362b9e155667': {
