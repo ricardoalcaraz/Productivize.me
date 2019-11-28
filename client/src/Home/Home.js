@@ -1,9 +1,9 @@
 import React from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import PropTypes from 'prop-types'
-import SignOut from './Authentication/Buttons/SignOut'
+import SignOut from '../Authentication/Buttons/SignOut'
 
-export default class Main extends React.Component {
+export default class Home extends React.Component {
   static navigationOptions = {
     title: 'Home'
   };
@@ -31,6 +31,6 @@ const styles = StyleSheet.create({
   }
 })
 
-Main.propTypes = {
+Home.propTypes = {
   navigation: PropTypes.object
 }
