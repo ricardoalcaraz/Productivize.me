@@ -1,3 +1,5 @@
+revoke usage on schema public from public;
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -9,10 +11,13 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+
 --
 -- TOC entry 3005 (class 1262 OID 13117)
 -- Name: postgres; Type: DATABASE; Schema: -; Owner: postgres
 --
+
+
 CREATE DATABASE habit WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
 CREATE DATABASE plant WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
 CREATE DATABASE time WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
@@ -48,42 +53,34 @@ CREATE TABLE garden (
 );
 
 \connect habit
-CREATE TABLE frequency (
-	identifier int PRIMARY KEY,
-	frequency_description VARCHAR(20)
-);
-
+CREATE EXTENSION "uuid-ossp";
+SELECT uuid_generate_v1mc();
 CREATE TABLE habit (
-	identifier SERIAL PRIMARY KEY,
+	identifier UUID PRIMARY KEY DEFAULT uuid_generate_v1mc(),
 	user_id VARCHAR(50) NOT NULL,
-	description VARCHAR(100) NOT NULL,
-	created_on timestamp NOT NULL,
-	start_date timestamp NOT NULL,
-	end_date timestamp NULL,
-	frequency_id int NOT NULL,
-	FOREIGN KEY(frequency_id) REFERENCES frequency(identifier)
+	data jsonb
 );
 
 \connect task
+CREATE EXTENSION "uuid-ossp";
+SELECT uuid_generate_v1mc();
 CREATE TABLE task (
-	identifier SERIAL PRIMARY KEY,
-	date TIMESTAMP NULL,
-	name VARCHAR(20) NOT NULL,
-	description VARCHAR(50) NOT NULL,
+	identifier UUID PRIMARY KEY DEFAULT uuid_generate_v1mc(),
+	user_id VARCHAR(50) NOT NULL,
 	completed BOOLEAN NOT NULL,
-	time_required VARCHAR(20) NULL
+	data jsonb
 );
 
 CREATE TABLE standalone_task (
-	identifier SERIAL PRIMARY KEY,
+	identifier UUID PRIMARY KEY,
 	user_ID VARCHAR(50) NOT NULL
 ) INHERITS (task);
 
 CREATE TABLE completed_task (
 	identifier SERIAL PRIMARY KEY,
-	task_ID INT NOT NULL,
+	task_id UUID NOT NULL,
 	date_completed TIMESTAMP NOT NULL,
-	user_ID VARCHAR(50) NOT NULL
+	FOREIGN KEY (task_id) REFERENCES task(identifier)
 );
 
 CREATE TABLE subtask (
@@ -95,6 +92,7 @@ CREATE TABLE subtask (
 \connect time
 CREATE TABLE time_keeping (
     identifier SERIAL PRIMARY KEY,
+	user_id VARCHAR(50) NOT NULL,
     task_ID INT NOT NULL,
     time_logged time NOT NULL
 );

@@ -7,3 +7,5 @@ In that case you definitely do not want to call pool.end() when your query compl
 postgres connection string => 'postgres://username:password@host:port/database'
 
 https://node-postgres.com/
+
+FOR ANY EXTENSIONS NOT IN THIS LIST https://www.postgresql.org/docs/9.6/contrib.html WE MUST COMPILE THE IMAGE MANUALLY.
