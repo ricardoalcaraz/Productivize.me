@@ -1,54 +1,45 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
-import {ADD_HABIT, SET_HABITS} from './Habits/Store/HabitActions'
+import { call, put, takeEvery, takeLatest, select } from 'redux-saga/effects'
+import { retrieveStore, saveStore } from './Utility/Storage'
+import { ADD_HABIT, SET_HABITS } from './Habits/Store/HabitActions'
+import { ADD_TASK, DELETE_TASK, UPDATE_TASK } from './Tasks/Actions'
+import { MAIN_PAGE } from './Utility/Actions'
+import { log, logException } from './Utility/logger'
 
-//TODO: Make this part of the middleware
-//TODO: Only fetch data that doesn't exist within the list
-//TODO: Make the function only return data that the user has active
-const baseUrl = 'https://localhost:37101/api'
+const syncStates = [ADD_HABIT, SET_HABITS, ADD_TASK, DELETE_TASK, UPDATE_TASK]
 
-async function retrieveFromServer(endpoint, accessToken) {
-    let response = await fetch(`${baseUrl}${endpoint}`, {
-        method: 'GET',
-        headers: {
-            accessToken: 'Hello'
-        }
-    })
-    return await response.json()
-}
+//NOTE: React Dev tools debugger doesn't seem to stop on breakpoints here
 
-//TODO: Sync only habits without a uuid to the server
-//TODO: Make this part of the middleware
-async function syncToServer(habits) {
-    try{
-        const request = {
-        user_id: 'ralcaraz',
-        habits: habits
-        }
-        let response = await fetch('https://localhost:37101/api/habits/sync', {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json',
-            accessToken: 'Let Me In',
-        },
-        body: JSON.stringify(request)
-        })
-        return await response.json()
-    } catch(ex){
-        console.log(ex)
-    }
-}
-
+//--------------------------------------------------------------------------------
+//---------------------------Synchronization--------------------------------------
+//--------------------------------------------------------------------------------
 function* synchronizeData(action){
     try{
-        const habits = yield call(retrieveFromServer, action.endpoint)
-        yield put({type: SET_HABITS, habits});
+        log(`Synchronizing from action ${action.type}`)
+        const state = yield select()
+        yield saveStore(state)
     } catch(e){
-        console.log(e)
+        logException(e)
     }
 }
 
-function* synchronizationSaga(){
-    yield takeEvery(ADD_HABIT, synchronizeData)
+export function* synchronizationSaga(){
+    yield takeEvery(syncStates, synchronizeData)
 }
 
-export default synchronizationSaga
+//--------------------------------------------------------------------------------
+//---------------------------Login------------------------------------------------
+//--------------------------------------------------------------------------------
+export function* loginSaga() {
+    yield takeEvery(MAIN_PAGE, entry)
+}
+
+function* entry(action){
+    try {
+        yield call (log, "User skipping Authentication")
+        const store = yield call(retrieveStore)
+        yield putResolve({type: SET_STORE, store: store})
+    }
+    catch(e){
+        logException(e)
+    }
+}

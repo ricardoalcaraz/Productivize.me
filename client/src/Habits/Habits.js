@@ -4,6 +4,7 @@ import { View, Text, Button, TextInput } from 'react-native'
 import HabitList from './HabitList.js'
 import { connect } from 'react-redux'
 import { setHabits } from './Store/HabitActions'
+import { log } from '../Utility/logger'
 
 class Habits extends React.Component {
   constructor(props){
@@ -30,7 +31,7 @@ Habits.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
+  log("Setting habits to the habits screen")
   return {
     habits: state.habits.habits
   }

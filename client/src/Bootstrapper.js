@@ -3,11 +3,16 @@ import { ActivityIndicator, StatusBar, View } from 'react-native'
 import PropTypes from 'prop-types'
 import Amplify, { Auth } from 'aws-amplify'
 import awsconfig from '../aws-exports'
+import { setStore } from './Utility/Actions'
+import { connect } from 'react-redux'
+import { retrieveStore } from './Utility/Storage'
+import { log } from './Utility/logger'
 Amplify.configure(awsconfig)
 
-export default class Bootstrapper extends React.Component {
+class Bootstrapper extends React.Component {
   componentDidMount() {
     this._bootstrap()
+    this._loadStore()
   }
 
   async _bootstrap() {
@@ -27,6 +32,13 @@ export default class Bootstrapper extends React.Component {
     }, 3000)
   };
 
+  async _loadStore() {
+    log("Attempting to load store")
+    const store = await retrieveStore()
+    if(store) this.props.setStore(store)
+    log(`Received the following ${store}`)
+  }
+
   render() {
     return (
       <View>
@@ -40,3 +52,5 @@ export default class Bootstrapper extends React.Component {
 Bootstrapper.propTypes = {
   navigation: PropTypes.object
 }
+
+export default connect(null, { setStore })(Bootstrapper)

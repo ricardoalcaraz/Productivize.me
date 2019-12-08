@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import { View, StyleSheet, Switch, Text, Button } from 'react-native'
 import SignIn from './Forms/SignIn'
 import SignUp from './Forms/SignUp'
-
 import Amplify, { Auth } from 'aws-amplify'
 import awsconfig from '../../aws-exports'
 Amplify.configure(awsconfig)
 
-export default class AuthenticationGateway extends Component {
+export default class AuthenticationGateway extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -29,6 +28,7 @@ export default class AuthenticationGateway extends Component {
     )
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {

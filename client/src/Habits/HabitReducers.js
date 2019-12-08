@@ -24,7 +24,7 @@ const INITIAL_STATE = {
 const habitReducer = (state = INITIAL_STATE, action) => {
     switch(action.type){
         case ADD_HABIT:
-            action.habit.identifier = state.habits.length
+            action.habit.identifier = state.habits.length.toString()
             return Object.assign({}, state, {
                 habits: [
                     ...state.habits,
