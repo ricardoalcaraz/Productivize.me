@@ -1,8 +1,8 @@
-import {ADD_HABIT, DELETE_HABIT, SET_HABITS} from '../Habits/Store/HabitActions.js'
+import {ADD_HABIT, DELETE_HABIT, SET_HABITS, FETCH_HABITS_SUCCESS} from '../Habits/Store/HabitActions.js'
 
 const INITIAL_STATE = {
     habits: [{
-        identifier: 1,
+        identifier: 0,
         user_id: 'Ricardo',
         description: 'Brush Teeth',
         created_on: Date.now(),
@@ -11,7 +11,7 @@ const INITIAL_STATE = {
         frequency_description: 'Daily' 
     },
     {
-        identifier: 2,
+        identifier: 1,
         user_id: 'Ricardo',
         description: 'Program Productivize',
         created_on: Date.now(),
@@ -24,7 +24,7 @@ const INITIAL_STATE = {
 const habitReducer = (state = INITIAL_STATE, action) => {
     switch(action.type){
         case ADD_HABIT:
-            action.habit.identifier = state.habits.length
+            action.habit.identifier = state.habits.length.toString()
             return Object.assign({}, state, {
                 habits: [
                     ...state.habits,

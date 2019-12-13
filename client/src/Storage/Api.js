@@ -3,7 +3,7 @@
 
 const API_ROOT = 'https://www.ricardoalcaraz.dev/api/'
 
-const callApi = (endpoint, method, securityTokens, body = {}) => {
+export const callApi = async (endpoint, method, securityTokens, body = {}) => {
   const fullUrl = (endpoint.indexOf(API_ROOT) === -1) ? API_ROOT + endpoint : endpoint
   return fetch(fullUrl, Object.assign({}, {
     method: method,
@@ -53,4 +53,43 @@ export default store => next => action => {
       error: error.message || 'Something bad happened'
     }))
   )
+}
+
+
+//TODO: Make this part of the middleware
+//TODO: Only fetch data that doesn't exist within the list
+//TODO: Make the function only return data that the user has active
+const baseUrl = 'https://localhost:37101/api'
+
+//TODO: Move to an API file
+async function retrieveFromServer(endpoint, accessToken) {
+    let response = await fetch(`${baseUrl}${endpoint}`, {
+        method: 'GET',
+        headers: {
+            accessToken: 'Hello'
+        }
+    })
+    return await response.json()
+}
+
+//TODO: Sync only habits without a uuid to the server
+//TODO: Make this part of the middleware
+async function syncToServer(habits) {
+    try{
+        const request = {
+        user_id: 'ralcaraz',
+        habits: habits
+        }
+        let response = await fetch('https://localhost:37101/api/habits/sync', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            accessToken: 'Let Me In',
+        },
+        body: JSON.stringify(request)
+        })
+        return await response.json()
+    } catch(ex){
+        console.log(ex)
+    }
 }
