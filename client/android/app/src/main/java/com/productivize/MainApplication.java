@@ -1,4 +1,4 @@
-package com.phoneapp;
+package com.productivize;
 
 import android.app.Application;
 import android.content.Context;

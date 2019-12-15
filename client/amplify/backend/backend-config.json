@@ -1,9 +1,0 @@
-{
-	"auth": {
-		"productivized0bc9992": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": []
-		}
-	}
-}
