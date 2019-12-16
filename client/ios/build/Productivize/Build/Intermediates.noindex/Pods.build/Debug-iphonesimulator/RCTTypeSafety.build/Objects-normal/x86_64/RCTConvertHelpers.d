@@ -1,0 +1,29 @@
+dependencies: \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/node_modules/react-native/Libraries/TypeSafety/RCTConvertHelpers.mm \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Target\ Support\ Files/RCTTypeSafety/RCTTypeSafety-prefix.pch \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/node_modules/react-native/Libraries/TypeSafety/RCTConvertHelpers.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/FBLazyVector/FBLazyVector/FBLazyVector.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/FBLazyVector/FBLazyVector/FBLazyIterator.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Folly/folly/Optional.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Folly/folly/Portability.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Folly/folly/portability/Config.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Folly/folly/CPortability.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Folly/folly/Traits.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Folly/folly/Utility.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Folly/folly/lang/Exception.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Folly/folly/CppAttributes.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/React-Core/React/RCTConvert.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/React-Core/React/RCTAnimationType.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/React-Core/React/RCTBorderStyle.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/React-Core/React/RCTDefines.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/React-Core/React/RCTInspectorDevServerHelper.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/React-Core/React/RCTPackagerConnection.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/React-Core/React/RCTLog.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/React-Core/React/RCTAssert.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/React-Core/React/RCTUtils.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/React-Core/React/RCTPointerEvents.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/React-Core/React/RCTTextDecorationLineType.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/Yoga/yoga/Yoga.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/Yoga/yoga/YGEnums.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/Yoga/yoga/YGMacros.h \
+  /Users/ralcaraz/Documents/Productivize.me/client/Productivize/ios/Pods/Headers/Public/Yoga/yoga/YGValue.h
