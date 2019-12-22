@@ -1,14 +1,10 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import tasks from '../Tasks/Reducer'
-import habits from '../Habits/HabitReducers'
-import utils from '../Utility/Reducers'
+import { createStore, applyMiddleware } from 'redux'
 import ApiMiddleware from './Api'
 import AuthenticationMiddleware from './Authentication'
 import createSagaMiddleware from 'redux-saga'
-import { synchronizationSaga, loginSaga }  from '../saga'
+import { synchronizationSaga, loginSaga }  from '../sagas'
+import rootReducer from '../Utility/Reducers'
 
-const rootReducer = combineReducers({ tasks, habits, utils})
 const sagaMiddleware = createSagaMiddleware()
 const middlewareApplier = applyMiddleware(AuthenticationMiddleware, ApiMiddleware, sagaMiddleware)
 const store = createStore(rootReducer, middlewareApplier)

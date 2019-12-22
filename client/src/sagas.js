@@ -1,7 +1,7 @@
 import { call, put, takeEvery, takeLatest, select } from 'redux-saga/effects'
 import { retrieveStore, saveStore } from './Utility/Storage'
-import { ADD_HABIT, SET_HABITS } from './Habits/Store/HabitActions'
-import { ADD_TASK, DELETE_TASK, UPDATE_TASK } from './Tasks/Actions'
+import { ADD_HABIT, SET_HABITS } from './Utility/Actions'
+import { ADD_TASK, DELETE_TASK, UPDATE_TASK } from './Utility/Actions'
 import { MAIN_PAGE } from './Utility/Actions'
 import { log, logException } from './Utility/logger'
 

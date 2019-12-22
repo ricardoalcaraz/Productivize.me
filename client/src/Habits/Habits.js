@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { View, Text, Button, TextInput } from 'react-native'
 import HabitList from './HabitList.js'
 import { connect } from 'react-redux'
-import { setHabits } from './Store/HabitActions'
+import { setHabits } from '../Utility/Actions'
 import { log } from '../Utility/logger'
 
 class Habits extends React.Component {

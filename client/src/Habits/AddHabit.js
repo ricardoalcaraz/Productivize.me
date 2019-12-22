@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Button, TextInput } from 'react-native'
-import { addHabit } from './Store/HabitActions.js'
+import { addHabit } from '../Utility/Actions'
 import { connect } from 'react-redux'
 
 //TODO: Expand this out and make it actually useful

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import TaskList from './List'
 import { SafeAreaView, Text, Button } from 'react-native'
 import { connect } from 'react-redux'
-import { fetchTasksIfNeeded, requestTasksUpdate, pingTasksDatabase, createTask } from './Actions'
+import { fetchTasksIfNeeded, requestTasksUpdate, pingTasksDatabase, createTask } from '../Utility/Actions'
 
 const testTask = {
   name: 'test',

@@ -2,9 +2,6 @@ import React from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import PropTypes from 'prop-types'
 import SignOut from '../Authentication/Buttons/SignOut'
-import { log} from '../Utility/logger'
-import { connect } from 'react-redux'
-import { navigateToPage } from '../Utility/Actions'
 
 export default class Home extends React.Component {
   static navigationOptions = {
